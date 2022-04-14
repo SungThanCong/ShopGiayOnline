@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ShopGiayOnline.Models.GIAY>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of shoes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",new { @style="text-decoration: none;" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            GENDER
+        </th>
+        <th>
+            SIZE
+        </th>
+        <th>
+            QUANTITY
+        </th>
+        <th>
+            BRAND
+        </th>
+        <th>
+            IMAGE
+        </th>
+        <th>
+            DETAIL
+        </th>
+        <th>
+            PRICE
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.C_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tengiay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gioitinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.soluong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.chitiet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gia)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.magiay }) |
+            @Html.ActionLink("Details", "Details", new { id=item.magiay }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.magiay })
+        </td>
+    </tr>
+}
+
+</table>

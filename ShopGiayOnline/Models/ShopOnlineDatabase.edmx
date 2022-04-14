@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SHOPGIAYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BANNER">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hinh" Type="image" />
+        </EntityType>
+        <EntityType Name="BINHLUAN">
+          <Key>
+            <PropertyRef Name="_id" />
+          </Key>
+          <Property Name="_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="magiay" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="taikhoan" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="binhluan" Type="ntext" />
+          <Property Name="thoigian" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CTHD">
+          <Key>
+            <PropertyRef Name="sohd" />
+            <PropertyRef Name="magiay" />
+          </Key>
+          <Property Name="sohd" Type="int" Nullable="false" />
+          <Property Name="magiay" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="soluong" Type="int" />
+        </EntityType>
+        <EntityType Name="GIAY">
+          <Key>
+            <PropertyRef Name="magiay" />
+          </Key>
+          <Property Name="_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="magiay" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="tengiay" Type="varchar" MaxLength="255" />
+          <Property Name="gioitinh" Type="nvarchar" MaxLength="5" />
+          <Property Name="size" Type="int" />
+          <Property Name="soluong" Type="int" />
+          <Property Name="hang" Type="varchar" MaxLength="255" />
+          <Property Name="hinh" Type="image" />
+          <Property Name="chitiet" Type="ntext" />
+          <Property Name="gia" Type="money" />
+        </EntityType>
+        <EntityType Name="HOADON">
+          <Key>
+            <PropertyRef Name="sohd" />
+          </Key>
+          <Property Name="sohd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="khachhang" Type="varchar" MaxLength="100" />
+          <Property Name="trigia" Type="money" />
+          <Property Name="ngaythanhtoan" Type="date" />
+        </EntityType>
+        <EntityType Name="SaleOff">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="magiay" Type="varchar" MaxLength="10" />
+          <Property Name="giamgia" Type="int" />
+          <Property Name="ngaybatdau" Type="date" />
+          <Property Name="ngayketthuc" Type="date" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="tendangnhap" />
+          </Key>
+          <Property Name="_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tendangnhap" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="matkhau" Type="varchar" MaxLength="100" />
+          <Property Name="hoten" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="gioitinh" Type="nvarchar" MaxLength="5" />
+          <Property Name="sdt" Type="varchar" MaxLength="11" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="255" />
+          <Property Name="ngaysinh" Type="date" />
+          <Property Name="ngaydk" Type="date" />
+        </EntityType>
+        <EntityType Name="TAIKHOANCHU">
+          <Key>
+            <PropertyRef Name="tendangnhap" />
+          </Key>
+          <Property Name="tendangnhap" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="gmail" Type="varchar" MaxLength="100" />
+          <Property Name="matkhau" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sdt" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <Association Name="FK__BINHLUAN__magiay__49C3F6B7">
+          <End Role="GIAY" Type="Self.GIAY" Multiplicity="1" />
+          <End Role="BINHLUAN" Type="Self.BINHLUAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIAY">
+              <PropertyRef Name="magiay" />
+            </Principal>
+            <Dependent Role="BINHLUAN">
+              <PropertyRef Name="magiay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BINHLUAN__taikho__4AB81AF0">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+          <End Role="BINHLUAN" Type="Self.BINHLUAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="tendangnhap" />
+            </Principal>
+            <Dependent Role="BINHLUAN">
+              <PropertyRef Name="taikhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CTHD__magiay__5441852A">
+          <End Role="GIAY" Type="Self.GIAY" Multiplicity="1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIAY">
+              <PropertyRef Name="magiay" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="magiay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CTHD__sohd__534D60F1">
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOADON">
+              <PropertyRef Name="sohd" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="sohd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__khachhan__4E88ABD4">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="tendangnhap" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="khachhang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SaleOff__magiay__44FF419A">
+          <End Role="GIAY" Type="Self.GIAY" Multiplicity="0..1" />
+          <End Role="SaleOff" Type="Self.SaleOff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIAY">
+              <PropertyRef Name="magiay" />
+            </Principal>
+            <Dependent Role="SaleOff">
+              <PropertyRef Name="magiay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SHOPGIAYModelStoreContainer">
+          <EntitySet Name="BANNER" EntityType="Self.BANNER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BINHLUAN" EntityType="Self.BINHLUAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CTHD" EntityType="Self.CTHD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GIAY" EntityType="Self.GIAY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HOADON" EntityType="Self.HOADON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleOff" EntityType="Self.SaleOff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAIKHOANCHU" EntityType="Self.TAIKHOANCHU" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BINHLUAN__magiay__49C3F6B7" Association="Self.FK__BINHLUAN__magiay__49C3F6B7">
+            <End Role="GIAY" EntitySet="GIAY" />
+            <End Role="BINHLUAN" EntitySet="BINHLUAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BINHLUAN__taikho__4AB81AF0" Association="Self.FK__BINHLUAN__taikho__4AB81AF0">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+            <End Role="BINHLUAN" EntitySet="BINHLUAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CTHD__magiay__5441852A" Association="Self.FK__CTHD__magiay__5441852A">
+            <End Role="GIAY" EntitySet="GIAY" />
+            <End Role="CTHD" EntitySet="CTHD" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CTHD__sohd__534D60F1" Association="Self.FK__CTHD__sohd__534D60F1">
+            <End Role="HOADON" EntitySet="HOADON" />
+            <End Role="CTHD" EntitySet="CTHD" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__khachhan__4E88ABD4" Association="Self.FK__HOADON__khachhan__4E88ABD4">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+            <End Role="HOADON" EntitySet="HOADON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SaleOff__magiay__44FF419A" Association="Self.FK__SaleOff__magiay__44FF419A">
+            <End Role="GIAY" EntitySet="GIAY" />
+            <End Role="SaleOff" EntitySet="SaleOff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SHOPGIAYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BANNER">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hinh" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="BINHLUAN">
+          <Key>
+            <PropertyRef Name="C_id" />
+          </Key>
+          <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="magiay" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="taikhoan" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="binhluan1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="thoigian" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="GIAY" Relationship="Self.FK__BINHLUAN__magiay__49C3F6B7" FromRole="BINHLUAN" ToRole="GIAY" />
+          <NavigationProperty Name="TAIKHOAN1" Relationship="Self.FK__BINHLUAN__taikho__4AB81AF0" FromRole="BINHLUAN" ToRole="TAIKHOAN" />
+        </EntityType>
+        <EntityType Name="CTHD">
+          <Key>
+            <PropertyRef Name="sohd" />
+            <PropertyRef Name="magiay" />
+          </Key>
+          <Property Name="sohd" Type="Int32" Nullable="false" />
+          <Property Name="magiay" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="soluong" Type="Int32" />
+          <NavigationProperty Name="GIAY" Relationship="Self.FK__CTHD__magiay__5441852A" FromRole="CTHD" ToRole="GIAY" />
+          <NavigationProperty Name="HOADON" Relationship="Self.FK__CTHD__sohd__534D60F1" FromRole="CTHD" ToRole="HOADON" />
+        </EntityType>
+        <EntityType Name="GIAY">
+          <Key>
+            <PropertyRef Name="magiay" />
+          </Key>
+          <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="magiay" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tengiay" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="gioitinh" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="size" Type="Int32" />
+          <Property Name="soluong" Type="Int32" />
+          <Property Name="hang" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="hinh" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="chitiet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="gia" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="BINHLUANs" Relationship="Self.FK__BINHLUAN__magiay__49C3F6B7" FromRole="GIAY" ToRole="BINHLUAN" />
+          <NavigationProperty Name="CTHDs" Relationship="Self.FK__CTHD__magiay__5441852A" FromRole="GIAY" ToRole="CTHD" />
+          <NavigationProperty Name="SaleOffs" Relationship="Self.FK__SaleOff__magiay__44FF419A" FromRole="GIAY" ToRole="SaleOff" />
+        </EntityType>
+        <EntityType Name="HOADON">
+          <Key>
+            <PropertyRef Name="sohd" />
+          </Key>
+          <Property Name="sohd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="khachhang" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="trigia" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ngaythanhtoan" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CTHDs" Relationship="Self.FK__CTHD__sohd__534D60F1" FromRole="HOADON" ToRole="CTHD" />
+          <NavigationProperty Name="TAIKHOAN" Relationship="Self.FK__HOADON__khachhan__4E88ABD4" FromRole="HOADON" ToRole="TAIKHOAN" />
+        </EntityType>
+        <EntityType Name="SaleOff">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="magiay" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="giamgia" Type="Int32" />
+          <Property Name="ngaybatdau" Type="DateTime" Precision="0" />
+          <Property Name="ngayketthuc" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="GIAY" Relationship="Self.FK__SaleOff__magiay__44FF419A" FromRole="SaleOff" ToRole="GIAY" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="tendangnhap" />
+          </Key>
+          <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tendangnhap" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="matkhau" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="hoten" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="gioitinh" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="sdt" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="diachi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ngaysinh" Type="DateTime" Precision="0" />
+          <Property Name="ngaydk" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="BINHLUANs" Relationship="Self.FK__BINHLUAN__taikho__4AB81AF0" FromRole="TAIKHOAN" ToRole="BINHLUAN" />
+          <NavigationProperty Name="HOADONs" Relationship="Self.FK__HOADON__khachhan__4E88ABD4" FromRole="TAIKHOAN" ToRole="HOADON" />
+        </EntityType>
+        <EntityType Name="TAIKHOANCHU">
+          <Key>
+            <PropertyRef Name="tendangnhap" />
+          </Key>
+          <Property Name="tendangnhap" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="matkhau" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sdt" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__BINHLUAN__magiay__49C3F6B7">
+          <End Role="GIAY" Type="Self.GIAY" Multiplicity="1" />
+          <End Role="BINHLUAN" Type="Self.BINHLUAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIAY">
+              <PropertyRef Name="magiay" />
+            </Principal>
+            <Dependent Role="BINHLUAN">
+              <PropertyRef Name="magiay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BINHLUAN__taikho__4AB81AF0">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+          <End Role="BINHLUAN" Type="Self.BINHLUAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="tendangnhap" />
+            </Principal>
+            <Dependent Role="BINHLUAN">
+              <PropertyRef Name="taikhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CTHD__magiay__5441852A">
+          <End Role="GIAY" Type="Self.GIAY" Multiplicity="1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIAY">
+              <PropertyRef Name="magiay" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="magiay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CTHD__sohd__534D60F1">
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="1" />
+          <End Role="CTHD" Type="Self.CTHD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOADON">
+              <PropertyRef Name="sohd" />
+            </Principal>
+            <Dependent Role="CTHD">
+              <PropertyRef Name="sohd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SaleOff__magiay__44FF419A">
+          <End Role="GIAY" Type="Self.GIAY" Multiplicity="0..1" />
+          <End Role="SaleOff" Type="Self.SaleOff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIAY">
+              <PropertyRef Name="magiay" />
+            </Principal>
+            <Dependent Role="SaleOff">
+              <PropertyRef Name="magiay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__khachhan__4E88ABD4">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="tendangnhap" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="khachhang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SHOPGIAYEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BANNERs" EntityType="Self.BANNER" />
+          <EntitySet Name="BINHLUANs" EntityType="Self.BINHLUAN" />
+          <EntitySet Name="CTHDs" EntityType="Self.CTHD" />
+          <EntitySet Name="GIAYs" EntityType="Self.GIAY" />
+          <EntitySet Name="HOADONs" EntityType="Self.HOADON" />
+          <EntitySet Name="SaleOffs" EntityType="Self.SaleOff" />
+          <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+          <EntitySet Name="TAIKHOANCHUs" EntityType="Self.TAIKHOANCHU" />
+          <AssociationSet Name="FK__BINHLUAN__magiay__49C3F6B7" Association="Self.FK__BINHLUAN__magiay__49C3F6B7">
+            <End Role="GIAY" EntitySet="GIAYs" />
+            <End Role="BINHLUAN" EntitySet="BINHLUANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BINHLUAN__taikho__4AB81AF0" Association="Self.FK__BINHLUAN__taikho__4AB81AF0">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+            <End Role="BINHLUAN" EntitySet="BINHLUANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CTHD__magiay__5441852A" Association="Self.FK__CTHD__magiay__5441852A">
+            <End Role="GIAY" EntitySet="GIAYs" />
+            <End Role="CTHD" EntitySet="CTHDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CTHD__sohd__534D60F1" Association="Self.FK__CTHD__sohd__534D60F1">
+            <End Role="HOADON" EntitySet="HOADONs" />
+            <End Role="CTHD" EntitySet="CTHDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SaleOff__magiay__44FF419A" Association="Self.FK__SaleOff__magiay__44FF419A">
+            <End Role="GIAY" EntitySet="GIAYs" />
+            <End Role="SaleOff" EntitySet="SaleOffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__khachhan__4E88ABD4" Association="Self.FK__HOADON__khachhan__4E88ABD4">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+            <End Role="HOADON" EntitySet="HOADONs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SHOPGIAYModelStoreContainer" CdmEntityContainer="SHOPGIAYEntities">
+          <EntitySetMapping Name="BANNERs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.BANNER">
+              <MappingFragment StoreEntitySet="BANNER">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="hinh" ColumnName="hinh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BINHLUANs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.BINHLUAN">
+              <MappingFragment StoreEntitySet="BINHLUAN">
+                <ScalarProperty Name="C_id" ColumnName="_id" />
+                <ScalarProperty Name="magiay" ColumnName="magiay" />
+                <ScalarProperty Name="taikhoan" ColumnName="taikhoan" />
+                <ScalarProperty Name="binhluan1" ColumnName="binhluan" />
+                <ScalarProperty Name="thoigian" ColumnName="thoigian" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CTHDs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.CTHD">
+              <MappingFragment StoreEntitySet="CTHD">
+                <ScalarProperty Name="sohd" ColumnName="sohd" />
+                <ScalarProperty Name="magiay" ColumnName="magiay" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GIAYs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.GIAY">
+              <MappingFragment StoreEntitySet="GIAY">
+                <ScalarProperty Name="C_id" ColumnName="_id" />
+                <ScalarProperty Name="magiay" ColumnName="magiay" />
+                <ScalarProperty Name="tengiay" ColumnName="tengiay" />
+                <ScalarProperty Name="gioitinh" ColumnName="gioitinh" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+                <ScalarProperty Name="hang" ColumnName="hang" />
+                <ScalarProperty Name="hinh" ColumnName="hinh" />
+                <ScalarProperty Name="chitiet" ColumnName="chitiet" />
+                <ScalarProperty Name="gia" ColumnName="gia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HOADONs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.HOADON">
+              <MappingFragment StoreEntitySet="HOADON">
+                <ScalarProperty Name="sohd" ColumnName="sohd" />
+                <ScalarProperty Name="khachhang" ColumnName="khachhang" />
+                <ScalarProperty Name="trigia" ColumnName="trigia" />
+                <ScalarProperty Name="ngaythanhtoan" ColumnName="ngaythanhtoan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleOffs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.SaleOff">
+              <MappingFragment StoreEntitySet="SaleOff">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="magiay" ColumnName="magiay" />
+                <ScalarProperty Name="giamgia" ColumnName="giamgia" />
+                <ScalarProperty Name="ngaybatdau" ColumnName="ngaybatdau" />
+                <ScalarProperty Name="ngayketthuc" ColumnName="ngayketthuc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAIKHOANs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.TAIKHOAN">
+              <MappingFragment StoreEntitySet="TAIKHOAN">
+                <ScalarProperty Name="C_id" ColumnName="_id" />
+                <ScalarProperty Name="tendangnhap" ColumnName="tendangnhap" />
+                <ScalarProperty Name="matkhau" ColumnName="matkhau" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="gioitinh" ColumnName="gioitinh" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="ngaysinh" ColumnName="ngaysinh" />
+                <ScalarProperty Name="ngaydk" ColumnName="ngaydk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAIKHOANCHUs">
+            <EntityTypeMapping TypeName="SHOPGIAYModel.TAIKHOANCHU">
+              <MappingFragment StoreEntitySet="TAIKHOANCHU">
+                <ScalarProperty Name="tendangnhap" ColumnName="tendangnhap" />
+                <ScalarProperty Name="gmail" ColumnName="gmail" />
+                <ScalarProperty Name="matkhau" ColumnName="matkhau" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
