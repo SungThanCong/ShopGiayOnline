@@ -4,79 +4,81 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<style>
+    table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+        content: "\25B4\25BE"
+    }
+    table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+        opacity: 0.2;
+    }
+    #example > thead > tr > th:hover {
+        background-color: lightgray;
+    }
+</style>
+<div class="d-flex justify-content-between mb-4 ">
+    <h2 class="fw-bold">Products</h2>
+    <a href="@Url.Action("Create","Product")" class="btn btn-primary p-2 pb-1 pt-1 text-white bg-warning border-0 rounded-0 text-center">Create new</a>
+</div>
 
-<h2>List of shoes</h2>
+<div class="card">
+    <table id="example" class="table table-striped  sortable" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Gender
+                </th>
+             
+                <th>
+                    Stock
+                </th>
+            
+                <th>
+                    Price
+                </th>
+               
+            </tr>
+        </thead>
 
-<p>
-    @Html.ActionLink("Create New", "Create",new { @style="text-decoration: none;" })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            ID
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            GENDER
-        </th>
-        <th>
-            SIZE
-        </th>
-        <th>
-            QUANTITY
-        </th>
-        <th>
-            BRAND
-        </th>
-        <th>
-            IMAGE
-        </th>
-        <th>
-            DETAIL
-        </th>
-        <th>
-            PRICE
-        </th>
-        <th></th>
-    </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.hinh)
+                        @Html.DisplayFor(modelItem => item.tengiay)
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.C_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tengiay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.gioitinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.size)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.soluong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.hang)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.hinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.chitiet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.gia)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.magiay }) |
-            @Html.ActionLink("Details", "Details", new { id=item.magiay }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.magiay })
-        </td>
-    </tr>
-}
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.gioitinh)
+                    </td>
+                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.soluong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.gia)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.magiay, style = "text-decoration: none;" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.magiay }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.magiay })
+                    </td>
+                </tr>
+            }
+        </tbody>
 
-</table>
+
+    </table>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
