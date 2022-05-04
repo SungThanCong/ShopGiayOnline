@@ -30,7 +30,8 @@ namespace ShopGiayOnline.Models
         public DbSet<CTHD> CTHDs { get; set; }
         public DbSet<GIAY> GIAYs { get; set; }
         public DbSet<HOADON> HOADONs { get; set; }
-        public DbSet<SaleOff> SaleOffs { get; set; }
+        public DbSet<IMAGE> IMAGES { get; set; }
+        public DbSet<SALEOFF> SALEOFFs { get; set; }
         public DbSet<TAIKHOAN> TAIKHOANs { get; set; }
         public DbSet<TAIKHOANCHU> TAIKHOANCHUs { get; set; }
     }

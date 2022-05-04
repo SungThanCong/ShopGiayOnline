@@ -30,6 +30,9 @@ namespace ShopGiayOnline.Models
         public string diachi { get; set; }
         public Nullable<System.DateTime> ngaysinh { get; set; }
         public Nullable<System.DateTime> ngaydk { get; set; }
+        public string avatar { get; set; }
+        public Nullable<decimal> doanhthu { get; set; }
+        public string quoctich { get; set; }
     
         public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }
         public virtual ICollection<HOADON> HOADONs { get; set; }

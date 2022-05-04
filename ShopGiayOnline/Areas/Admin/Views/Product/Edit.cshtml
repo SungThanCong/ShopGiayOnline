@@ -5,91 +5,118 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Edit product</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>GIAY</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @Html.HiddenFor(model => model.magiay)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.tengiay, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tengiay, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tengiay, "", new { @class = "text-danger" })
+        <div class="d-md-flex justify-content-between flex-row">
+            <div class="me-md-4 form-group col-md-8">
+                <div class="card-body card  mb-3 ps-4">
+                    <div class="form-group mb-3 ">
+                        <label class="form-control-label  h6">Name</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.tengiay, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.tengiay, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3 ">
+                        <label class="form-control-label  h6">Gender</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.gioitinh, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.gioitinh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-control-label h6">
+                            The detail information of product
+                        </label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.chitiet, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.chitiet, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group card p-4 ps-4 mb-3">
+                    <label class="form-control-label h6">Brand</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.hang, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.hang, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group card p-4 ps-4 mb-3">
+                    <label class="form-control-label h6">Price</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.gia, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.gia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="card form-group p-4 mb-2 text-center">
+                    <label class="form-control-label h6">Image</label>
+                    <div>
+                        <img id="user_img" height="100"
+                             width="90" style="border:solid" src="@Url.Content(Model.hinh)"/>
+                        
+                    </div>
+                    <div> 
+                        <input type="file" title="search image" id="file" name="file" onchange="show(this)" />
+                    </div>
+                </div>
+                <div class="card form-group mb-3 p-4">
+                    <label class="form-control-label h6">Size</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.size, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.size, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="card form-group mb-3 p-4">
+                    <label class="form-control-label  h6">Number of product</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.soluong, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.soluong, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.gioitinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.gioitinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.gioitinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.size, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.size, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.size, "", new { @class = "text-danger" })
+        <div class="form-group d-flex">
+            <div class="col-md-offset-2 mb-3 ">
+                <input type="submit" value="Edit" class="btn btn-default bg-success opacity-75 text-white text-center border-0 me-2" />
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.soluong, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.soluong, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.soluong, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.hang, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.hang, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.hang, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.hinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.hinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.hinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.chitiet, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.chitiet, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.chitiet, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.gia, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.gia, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.gia, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div>
+                <a href="@Url.Action("Index","Product")" class="btn btn-default bg-danger opacity-75 text-white text-center border-0">Back to List</a>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script type="text/javascript">
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>

@@ -15,7 +15,7 @@ namespace ShopGiayOnline.Models
     public partial class CTHD
     {
         public int sohd { get; set; }
-        public string magiay { get; set; }
+        public int magiay { get; set; }
         public Nullable<int> soluong { get; set; }
     
         public virtual GIAY GIAY { get; set; }

@@ -18,22 +18,23 @@ namespace ShopGiayOnline.Models
         {
             this.BINHLUANs = new HashSet<BINHLUAN>();
             this.CTHDs = new HashSet<CTHD>();
-            this.SaleOffs = new HashSet<SaleOff>();
+            this.IMAGES = new HashSet<IMAGE>();
+            this.SALEOFFs = new HashSet<SALEOFF>();
         }
     
-        public int C_id { get; set; }
-        public string magiay { get; set; }
+        public int magiay { get; set; }
         public string tengiay { get; set; }
         public string gioitinh { get; set; }
         public Nullable<int> size { get; set; }
         public Nullable<int> soluong { get; set; }
         public string hang { get; set; }
-        public byte[] hinh { get; set; }
+        public string hinh { get; set; }
         public string chitiet { get; set; }
         public Nullable<decimal> gia { get; set; }
     
         public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }
         public virtual ICollection<CTHD> CTHDs { get; set; }
-        public virtual ICollection<SaleOff> SaleOffs { get; set; }
+        public virtual ICollection<IMAGE> IMAGES { get; set; }
+        public virtual ICollection<SALEOFF> SALEOFFs { get; set; }
     }
 }

@@ -3,21 +3,14 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    <link href="~/Areas/Admin/Assets/ListProduct.css" rel="stylesheet" />
+    <script src="~/Scripts/popper.min.js"></script>
+
 }
-<style>
-    table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
-        content: "\25B4\25BE"
-    }
-    table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
-        opacity: 0.2;
-    }
-    #example > thead > tr > th:hover {
-        background-color: lightgray;
-    }
-</style>
+
 <div class="d-flex justify-content-between mb-4 ">
     <h2 class="fw-bold">Products</h2>
-    <a href="@Url.Action("Create","Product")" class="btn btn-primary p-2 pb-1 pt-1 text-white bg-warning border-0 rounded-0 text-center">Create new</a>
+    <a href="@Url.Action("Create","Product")" class="btn btn-primary p-2 text-white bg-warning border-0 rounded-0 text-center">Create new</a>
 </div>
 
 <div class="card">
@@ -27,45 +20,57 @@
                 <th>
                     Product
                 </th>
+
                 <th>
                     Gender
                 </th>
-             
+
                 <th>
                     Stock
                 </th>
-            
+
                 <th>
                     Price
                 </th>
-               
+
             </tr>
         </thead>
 
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.hinh)
+                var source = item.hinh;
+                <tr class="row-table">
+
+                    <td class="column-center">
+                        <img src="@Url.Content(item.hinh)" width="60" height="60" class="p-1" />
                         @Html.DisplayFor(modelItem => item.tengiay)
 
                     </td>
-                    <td>
+                    <td class="column-center">
                         @Html.DisplayFor(modelItem => item.gioitinh)
                     </td>
-                  
-                    <td>
+
+                    <td class="column-center">
                         @Html.DisplayFor(modelItem => item.soluong)
                     </td>
-                    <td>
+                    <td class="column-center">
                         @Html.DisplayFor(modelItem => item.gia)
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.magiay, style = "text-decoration: none;" }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.magiay }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.magiay })
+
+                    <td class="option-mobile column-center">
+                        <div class="dropdown">
+                            <a class="btn bg-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li> <a class="dropdown-item" href="@Url.Action("Edit","Product", new { id = item.magiay })">Edit</a></li>
+                              
+                                <li><a class="dropdown-item" href="@Url.Action("Delete","Product", new { id = item.magiay })">Delete</a></li>
+                            </ul>
+                        </div>
+
                     </td>
                 </tr>
             }
@@ -78,7 +83,9 @@
 
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('#example').DataTable;
     });
+
 </script>
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

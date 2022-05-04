@@ -12,15 +12,12 @@ namespace ShopGiayOnline.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BINHLUAN
+    public partial class IMAGE
     {
-        public int C_id { get; set; }
-        public int magiay { get; set; }
-        public string taikhoan { get; set; }
-        public string binhluan1 { get; set; }
-        public Nullable<System.DateTime> thoigian { get; set; }
+        public int id { get; set; }
+        public Nullable<int> magiay { get; set; }
+        public string image_url { get; set; }
     
         public virtual GIAY GIAY { get; set; }
-        public virtual TAIKHOAN TAIKHOAN1 { get; set; }
     }
 }
