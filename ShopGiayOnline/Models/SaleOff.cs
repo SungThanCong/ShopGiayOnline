@@ -12,10 +12,10 @@ namespace ShopGiayOnline.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SaleOff
+    public partial class SALEOFF
     {
         public string id { get; set; }
-        public string magiay { get; set; }
+        public Nullable<int> magiay { get; set; }
         public Nullable<int> giamgia { get; set; }
         public Nullable<System.DateTime> ngaybatdau { get; set; }
         public Nullable<System.DateTime> ngayketthuc { get; set; }

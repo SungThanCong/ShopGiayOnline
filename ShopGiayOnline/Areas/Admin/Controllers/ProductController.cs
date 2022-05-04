@@ -1,6 +1,7 @@
 ﻿using ShopGiayOnline.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,7 +17,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
         {
             if (Session["username"] != null)
             {
-                return View(db.GIAYs.OrderBy(item => item.C_id).ToList());
+                return View(db.GIAYs.ToList());
             }
             else
             {
@@ -26,7 +27,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
         }
 
         // GET: Admin/Product/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (Session["username"] != null)
             {
@@ -56,13 +57,16 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
 
         // POST: Admin/Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(FormCollection collection, HttpPostedFileBase file)
         {
             try
             {
                 // TODO: Add insert logic here
                 GIAY giay = new GIAY();
-                giay.magiay = collection["magiay"];
+
+                var giaymax = db.GIAYs.Select(item => item).OrderByDescending(item => item.magiay).FirstOrDefault();
+                int id = giaymax.magiay + 1;
+
                 giay.gioitinh = collection["gioitinh"];
                 giay.tengiay = collection["tengiay"];
                 giay.soluong = int.Parse(collection["soluong"]);
@@ -70,19 +74,46 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                 giay.size = int.Parse(collection["size"]);
                 giay.chitiet = collection["chitiet"];
                 giay.gia = decimal.Parse(collection["gia"]);
+
+               
+                if(file != null)
+                {
+                    var allowedExtensions = new[] {
+                    ".Jpg", ".png", ".jpg", "jpeg"
+                        };
+                    var fileName = Path.GetFileName(file.FileName);
+                    var ext = Path.GetExtension(file.FileName);
+                    if (allowedExtensions.Contains(ext)) //check what type of extension  
+                    {
+                        string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                        string myfile = name + "_" + id + ext; //appending the name with id  
+                                                                   // store the file inside ~/project folder(Img)  
+                        var path = "~/Source/" + myfile;
+                        var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
+                        giay.hinh = path;
+                     
+                        file.SaveAs(path2);
+                    }
+                    else
+                    {
+                        ViewBag.message = "Please choose only Image file";
+                    }
+                }
                 db.GIAYs.Add(giay);
                 db.SaveChanges();
 
+               
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                ViewBag.Error = e.Message;
+                   return View();
             }
         }
 
         // GET: Admin/Product/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (Session["username"] != null)
             { 
@@ -102,7 +133,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
 
         // POST: Admin/Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(GIAY upd)
+        public ActionResult Edit(GIAY upd, HttpPostedFileBase file)
         {
             try
             {
@@ -120,6 +151,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                 var giay = db.GIAYs.Where(s => s.magiay == upd.magiay).ToList();
                 foreach (var item in giay)
                 {
+                    int id = item.magiay;
                     item.gioitinh = upd.gioitinh;
                     item.tengiay = upd.tengiay;
                     item.soluong = upd.soluong;
@@ -127,6 +159,37 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                     item.size = upd.size;
                     item.chitiet = upd.chitiet;
                     item.gia = upd.gia;
+
+                    if (file != null)
+                    {
+                        var allowedExtensions = new[] {
+                    ".Jpg", ".png", ".jpg", "jpeg"
+                        };
+                        var fileName = Path.GetFileName(file.FileName);
+                        var ext = Path.GetExtension(file.FileName);
+                        if (allowedExtensions.Contains(ext)) //check what type of extension  
+                        {
+                            string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                            string myfile = name + "_" + id + ext; //appending the name with id  
+                                                                   // store the file inside ~/project folder(Img)  
+                            var path = "~/Source/" + myfile;
+                            var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
+                            item.hinh = path;
+
+                            var path_del = Server.MapPath(item.hinh);
+                            FileInfo file2 = new FileInfo(path);
+                            if (file2.Exists)//check file exsit or not  
+                            {
+                                file2.Delete();
+                            }
+
+                            file.SaveAs(path2);
+                        }
+                        else
+                        {
+                            ViewBag.message = "Please choose only Image file";
+                        }
+                    }
                 }
 
                 db.SaveChanges();
@@ -140,7 +203,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
         }
 
         // GET: Admin/Product/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (Session["username"] != null)
             {
@@ -155,14 +218,22 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
 
         // POST: Admin/Product/Delete/5
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
                 GIAY giay = db.GIAYs.Find(id);
+               
                 db.GIAYs.Remove(giay);
                 db.SaveChanges();
+
+                var path = Server.MapPath(giay.hinh);
+                FileInfo file = new FileInfo(path);
+                if (file.Exists)//check file exsit or not  
+                {
+                    file.Delete();
+                }
 
                 return RedirectToAction("Index");
             }

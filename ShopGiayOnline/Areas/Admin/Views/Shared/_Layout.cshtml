@@ -4,16 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link href="~/Areas/Admin/Assets/Layout.css" rel="stylesheet" type="text/css"/>
-
+    <link href="~/Areas/Admin/Assets/Layout.css" rel="stylesheet" type="text/css" />
+   
 </head>
 <body>
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark collapse collapse-horizontal show border-end" id="sidebar">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" id="sidebar-nav">
-                    <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">                    
-                        <span class="fs-5 d-none d-sm-inline">Menu</span> 
+                    <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-5 d-none d-sm-inline">Menu</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto  mb-0 align-items-start " id="menu">
                         <li class="nav-item">
@@ -23,30 +23,22 @@
                         </li>
                         <li>
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-warning">
-                                <i class="fs-4 bi-speedometer2 " ></i> <span class="ms-1 d-sm-inline">Dashboard</span>
+                                <i class="fs-4 bi-speedometer2 "></i> <span class="ms-1 d-sm-inline">Dashboard</span>
                             </a>
-                            <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                                <li class="w-100 text-warning">
-                                    <a href="#" class="nav-link px-0"> <span class=" d-sm-inline">Item</span></a>
-                                </li>
-                                <li class="text-warning">
-                                    <a href="#" class="nav-link px-0"> <span class=" d-sm-inline">Item</span></a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="#" class="nav-link px-0 align-middle text-warning">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1  d-sm-inline">Orders</span>
                             </a>
                         </li>
-                      
+
                         <li>
                             <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-warning ">
                                 <i class="fs-4 bi-grid"></i> <span class="ms-1  d-sm-inline">Products</span>
                             </a>
                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                                 <li class="w-100 ">
-                                   
+
                                     <a href="@Url.Action("Index","Product")" class="nav-link px-0"> <span class="text-warning d-sm-inline">List product</span></a>
                                 </li>
                                 <li>
@@ -61,12 +53,12 @@
                         </li>
                     </ul>
                     <hr>
-                    
+
                 </div>
             </div>
-            <div class="col py-3">
+            <div class="col">
                 <div class="container-fluid body-content">
-                    <a id="btn-menu" href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="p text-decoration-none mb-5"><i class="bi bi-list bi-lg py-2 p-1 h2 fw-bold text-warning"></i></a>
+                    <a id="btn-menu" href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="p text-decoration-none mb-5 m-0"><i class="bi bi-list bi-lg h2 fw-bold text-warning"></i></a>
                     @RenderBody()
                     <hr />
                     <footer>
@@ -79,7 +71,5 @@
 
     @RenderSection("scripts", required: false)
 </body>
-<script>
 
-</script>
 </html>
