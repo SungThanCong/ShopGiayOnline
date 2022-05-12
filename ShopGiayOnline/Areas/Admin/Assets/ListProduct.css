@@ -28,3 +28,13 @@
 .column-center{
     vertical-align: middle;
 }
+#searchBox {
+    width: 100%;
+    padding: 4px;
+    padding-left: 12px;
+    margin-bottom: 12px;
+    border: #CCCCCC 0.5px solid;
+}
+#searchBox:focus{
+    outline: none;
+}

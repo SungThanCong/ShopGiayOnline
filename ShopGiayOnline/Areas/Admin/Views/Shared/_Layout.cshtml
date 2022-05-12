@@ -27,7 +27,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-0 align-middle text-warning">
+                            <a href="@Url.Action("Index","Order")" class="nav-link px-0 align-middle text-warning">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1  d-sm-inline">Orders</span>
                             </a>
                         </li>
@@ -47,7 +47,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-0 align-middle text-warning">
+                            <a href="@Url.Action("Index","Customer")" class="nav-link px-0 align-middle text-warning">
                                 <i class="fs-4 bi-people"></i> <span class="ms-1 d-sm-inline">Customers</span>
                             </a>
                         </li>
@@ -56,13 +56,16 @@
 
                 </div>
             </div>
-            <div class="col">
-                <div class="container-fluid body-content">
+            <div class="col min-vh-100" style="background-color: #f5f7fa;">
+                <div class="container-fluid body-content ms-2 me-2">
                     <a id="btn-menu" href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="p text-decoration-none mb-5 m-0"><i class="bi bi-list bi-lg h2 fw-bold text-warning"></i></a>
-                    @RenderBody()
+                    <div class="me-3">
+                        @RenderBody()
+
+                    </div>  
                     <hr />
                     <footer>
-                        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                        <p>&copy; @DateTime.Now.Year - DHDC</p>
                     </footer>
                 </div>
             </div>

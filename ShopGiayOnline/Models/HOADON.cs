@@ -23,6 +23,9 @@ namespace ShopGiayOnline.Models
         public string khachhang { get; set; }
         public Nullable<decimal> trigia { get; set; }
         public Nullable<System.DateTime> ngaythanhtoan { get; set; }
+        public string trangthai { get; set; }
+        public string phanhoi { get; set; }
+        public string dcgiaohang { get; set; }
     
         public virtual ICollection<CTHD> CTHDs { get; set; }
         public virtual TAIKHOAN TAIKHOAN { get; set; }
