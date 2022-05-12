@@ -1,40 +1,38 @@
-﻿@model IEnumerable<ShopGiayOnline.Models.GIAY>
+﻿@model IEnumerable<ShopGiayOnline.Models.TAIKHOAN>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
     <link href="~/Areas/Admin/Assets/ListProduct.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Assets/table_libary/paginate.css" rel="stylesheet" />
-
-
 }
 <style>
 </style>
-
 <div class="d-flex justify-content-between mb-4 ">
-    <h2 class="fw-bold">Products</h2>
-    <a href="@Url.Action("Create","Product")" class="btn btn-primary p-2 ps-3 pe-3 fw-bolder text-dark bg-warning border-0 rounded-0 text-center h5">Create new</a>
+    <h2 class="fw-bold">Customers</h2>
+    @*<a href="@Url.Action("Create","Customer")" class="btn btn-primary p-2 text-black fw-bold bg-warning border-0 rounded-0 text-center h5">Create new</a>*@
 </div>
-@*table-striped*@
 <input type="search" id="searchBox" placeholder="Filter...">
+
 <div class="card">
-    <table id="example" class="table  sortable" style="width:100%">
+    <table id="example" class="table table-striped sortable" style="width:100%">
         <thead>
             <tr>
                 <th>
-                    Product
+                    Name
                 </th>
 
                 <th>
-                    Gender
+                    Register
                 </th>
 
                 <th>
-                    Stock
+                    Country
                 </th>
 
                 <th>
-                    Price
+                    Spent
                 </th>
 
             </tr>
@@ -43,34 +41,35 @@
         <tbody>
             @foreach (var item in Model)
             {
+                <tr class="row-table  ">
 
-                <tr class="row-table">
-
-                    <td class="column-center">
-                        <img src="@Url.Content(item.hinh ?? "~/Source/Default/giay_default.png")" alt="hinh-giay" width="60" height="60" class="p-1" />
-                        @Html.DisplayFor(modelItem => item.tengiay)
-
-                    </td>
-                    <td class="column-center">
-                        @Html.DisplayFor(modelItem => item.gioitinh)
-                    </td>
-
-                    <td class="column-center">
-                        @if (item.soluong == 0)
-                        {<div class="bg-danger bg-opacity-25 text-danger fw-bolder p-1 text-center w-75" style="font-size: 0.8em;">Out Of Stock</div> }
-                        else if (item.soluong > 0)
-                        {
-                            <div class="bg-success bg-opacity-25 text-success fw-bolder p-1 text-center w-75" style="font-size: 0.8em;">@item.soluong In Stock</div>
-                        }
-                        else
-                        {
-                            <div class="bg-dark bg-opacity-25 text-dark fw-bolder p-1 text-center w-75" style="font-size: 0.8em;">Empty</div>
-                        }
+                    <td class="column-center d-flex">
+                        <img src="@Url.Content(item.avatar ?? "~/Source/Default/avatar_default.png" )" width="60" height="60" class="p-1 me-3" />
+                        <div class="align-items-center mt-2">
+                            <h5 class="m-0" style="font-size:1.1em">@item.hoten</h5>
+                            <div class="opacity-75 p-0 m-0">@item.email</div>
+                        </div>
 
 
                     </td>
+
+                    @if (item.ngaydk != null)
+                    {
+                        <td class="column-center">
+                            @DateTime.Parse(item.ngaydk.ToString()).ToString("dd/MM/yyyy")
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="column-center">
+                        </td>
+                    }
+
                     <td class="column-center">
-                        @Html.DisplayFor(modelItem => item.gia)
+                        @Html.DisplayFor(modelItem => item.quoctich)
+                    </td>
+                    <td class="column-center">
+                        @Html.DisplayFor(modelItem => item.doanhthu)
                     </td>
 
                     <td class="option-mobile column-center">
@@ -80,9 +79,9 @@
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li> <a class="dropdown-item" href="@Url.Action("Edit","Product", new { id = item.magiay })">Edit</a></li>
+                                <li> <a class="dropdown-item" href="@Url.Action("Details","Customer", new { id = item.tendangnhap })">Detail</a></li>
 
-                                <li><button class="dropdown-item text-danger" onclick="DelConfirm(`@item.magiay`)">Delete</button></li>
+                                <li><button class="dropdown-item text-danger" onclick="DelConfirm(`@item.tendangnhap`)">Delete</button></li>
                             </ul>
                         </div>
 
@@ -93,7 +92,6 @@
 
 
     </table>
-
 </div>
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -115,14 +113,11 @@
     $(document).ready(function () {
         $('#example').DataTable;
     });
-    function DelConfirm(magiay) {
+
+    function DelConfirm(tendangnhap) {
         if (confirm("Are you sure you want to delete this?")) {
-            $.post(`/Admin/Product/Delete`, { id: magiay });
-            window.location.href = "/Admin/Product";
-        } else {
-
+            $.post(`/Admin/Customer/Delete`, { id: tendangnhap });
+            window.location.href = "/Admin/Customer";
         }
-
     }
 </script>
-

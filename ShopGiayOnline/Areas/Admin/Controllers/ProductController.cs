@@ -27,19 +27,19 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
         }
 
         // GET: Admin/Product/Details/5
-        public ActionResult Details(int id)
-        {
-            if (Session["username"] != null)
-            {
-                return View(db.GIAYs.Find(id));
-            }
-            else
-            {
-                return RedirectToAction("Login", "Home");
-            }
+        //public ActionResult Details(int id)
+        //{
+        //    if (Session["username"] != null)
+        //    {
+        //        return View(db.GIAYs.Find(id));
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "Home");
+        //    }
 
            
-        }
+        //}
 
         // GET: Admin/Product/Create
         public ActionResult Create()
@@ -57,7 +57,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
 
         // POST: Admin/Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection, HttpPostedFileBase file)
+        public ActionResult Create(GIAY upd, HttpPostedFileBase file)
         {
             try
             {
@@ -67,16 +67,16 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                 var giaymax = db.GIAYs.Select(item => item).OrderByDescending(item => item.magiay).FirstOrDefault();
                 int id = giaymax.magiay + 1;
 
-                giay.gioitinh = collection["gioitinh"];
-                giay.tengiay = collection["tengiay"];
-                giay.soluong = int.Parse(collection["soluong"]);
-                giay.hang = collection["hang"];
-                giay.size = int.Parse(collection["size"]);
-                giay.chitiet = collection["chitiet"];
-                giay.gia = decimal.Parse(collection["gia"]);
+                giay.gioitinh = upd.gioitinh;
+                giay.tengiay = upd.tengiay;
+                giay.soluong = upd.soluong;
+                giay.hang = upd.hang;
+                giay.size = upd.size;
+                giay.chitiet = upd.chitiet;
+                giay.gia = upd.gia;
 
-               
-                if(file != null)
+
+                if (file != null)
                 {
                     var allowedExtensions = new[] {
                     ".Jpg", ".png", ".jpg", "jpeg"
@@ -86,7 +86,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                     if (allowedExtensions.Contains(ext)) //check what type of extension  
                     {
                         string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
-                        string myfile = name + "_" + id + ext; //appending the name with id  
+                        string myfile = "giay_" + id + ext; //appending the name with id  
                                                                    // store the file inside ~/project folder(Img)  
                         var path = "~/Source/" + myfile;
                         var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
@@ -170,19 +170,19 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                         if (allowedExtensions.Contains(ext)) //check what type of extension  
                         {
                             string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
-                            string myfile = name + "_" + id + ext; //appending the name with id  
+                            string myfile = "giay_" + id + ext; //appending the name with id  
                                                                    // store the file inside ~/project folder(Img)  
                             var path = "~/Source/" + myfile;
                             var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
-                            item.hinh = path;
+                           
 
                             var path_del = Server.MapPath(item.hinh);
-                            FileInfo file2 = new FileInfo(path);
+                            FileInfo file2 = new FileInfo(path_del);
                             if (file2.Exists)//check file exsit or not  
                             {
                                 file2.Delete();
                             }
-
+                            item.hinh = path;
                             file.SaveAs(path2);
                         }
                         else
