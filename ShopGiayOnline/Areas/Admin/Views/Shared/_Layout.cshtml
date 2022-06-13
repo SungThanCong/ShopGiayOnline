@@ -16,13 +16,13 @@
                         <span class="fs-5 d-none d-sm-inline">Menu</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto  mb-0 align-items-start " id="menu">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0 text-warning">
-                                <i class="fs-4 bi-house"></i> <span class="ms-1  d-sm-inline">Home</span>
-                            </a>
-                        </li>
+                        @*<li class="nav-item">
+            <a href="#" class="nav-link align-middle px-0 text-warning">
+                <i class="fs-4 bi-house"></i> <span class="ms-1  d-sm-inline">Home</span>
+            </a>
+        </li>*@
                         <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-warning">
+                            <a href="@Url.Action("Index","Dashboard")" class="nav-link px-0 align-middle text-warning">
                                 <i class="fs-4 bi-speedometer2 "></i> <span class="ms-1 d-sm-inline">Dashboard</span>
                             </a>
                         </li>
@@ -49,6 +49,11 @@
                         <li>
                             <a href="@Url.Action("Index","Customer")" class="nav-link px-0 align-middle text-warning">
                                 <i class="fs-4 bi-people"></i> <span class="ms-1 d-sm-inline">Customers</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Logout","Home")" class="nav-link px-0 align-middle text-warning">
+                                <i class="fs-4 bi bi-door-open-fill"></i> <span class="ms-1 d-sm-inline">Log out</span>
                             </a>
                         </li>
                     </ul>

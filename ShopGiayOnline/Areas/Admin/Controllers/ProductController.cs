@@ -57,53 +57,106 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
 
         // POST: Admin/Product/Create
         [HttpPost]
-        public ActionResult Create(GIAY upd, HttpPostedFileBase file)
+        public ActionResult Create(GIAY upd, HttpPostedFileBase[] files, FormCollection form)
         {
             try
             {
                 // TODO: Add insert logic here
                 GIAY giay = new GIAY();
-
-                var giaymax = db.GIAYs.Select(item => item).OrderByDescending(item => item.magiay).FirstOrDefault();
-                int id = giaymax.magiay + 1;
-
-                giay.gioitinh = upd.gioitinh;
-                giay.tengiay = upd.tengiay;
-                giay.soluong = upd.soluong;
-                giay.hang = upd.hang;
-                giay.size = upd.size;
-                giay.chitiet = upd.chitiet;
-                giay.gia = upd.gia;
-
-
-                if (file != null)
+                int count_size = 0;
+                if(form["size_1"].Length > 0 && form["quantity_1"].Length > 0)
                 {
-                    var allowedExtensions = new[] {
-                    ".Jpg", ".png", ".jpg", "jpeg"
-                        };
-                    var fileName = Path.GetFileName(file.FileName);
-                    var ext = Path.GetExtension(file.FileName);
-                    if (allowedExtensions.Contains(ext)) //check what type of extension  
-                    {
-                        string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
-                        string myfile = "giay_" + id + ext; //appending the name with id  
-                                                                   // store the file inside ~/project folder(Img)  
-                        var path = "~/Source/" + myfile;
-                        var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
-                        giay.hinh = path;
-                     
-                        file.SaveAs(path2);
-                    }
-                    else
-                    {
-                        ViewBag.message = "Please choose only Image file";
-                    }
+                    count_size = 1;
                 }
-                db.GIAYs.Add(giay);
-                db.SaveChanges();
 
-               
-                return RedirectToAction("Index");
+                
+                
+                if(upd.tengiay == null)
+                {
+                    ViewBag.Error = "Vui lòng nhập tên giày";
+                }
+                else if(count_size <1)
+                {
+                    ViewBag.Error = "Vui lòng nhập size giày";
+                }else if(!upd.gia.HasValue)
+                {
+                    ViewBag.Error = "Vui lòng nhập giá giày";
+                }
+                else
+                {
+                    giay.gioitinh = upd.gioitinh;
+                    giay.tengiay = upd.tengiay;
+                    //giay.soluong = upd.soluong;
+                    giay.hang = upd.hang;
+                    giay.chitiet = upd.chitiet;
+                    giay.gia = upd.gia;
+                    giay.danhgia = 0;
+                    giay.soluotdanhgia = 0;
+
+                    db.GIAYs.Add(giay);
+                    db.SaveChanges();
+
+                    
+                    var getGiay = db.GIAYs.Select(item => item).OrderByDescending(item => item.magiay).FirstOrDefault();
+                    int id = getGiay.magiay;
+
+                    if (files != null)
+                    {
+                        var file = files[0];
+                        if(file != null)
+                        {
+                            var fileName = Path.GetFileName(file.FileName);
+                            var ext = Path.GetExtension(file.FileName);
+                            string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                            string myfile = "giay_" + id + ext; //appending the name with id  
+                                                                // store the file inside ~/project folder(Img)  
+                            var path = "~/Source/" + myfile;
+                            var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
+                            getGiay.hinh = path;
+                            file.SaveAs(path2);
+
+                            foreach (var image in files)
+                            {
+                                var f_name = Path.GetFileName(image.FileName);
+                                var f_ext = Path.GetExtension(image.FileName);
+                                string f_nameWe = Path.GetFileNameWithoutExtension(f_name);
+                                string f_myfile = "giay_image_" + id + f_nameWe + f_ext;
+
+                                var f_path = "~/Source/Product/" + f_myfile;
+                                var f_path2 = Path.Combine(Server.MapPath("~/Source/Product"), f_myfile);
+                                IMAGE pro_image = new IMAGE();
+                                pro_image.image_url = f_path;
+                                image.SaveAs(f_path2);
+                                getGiay.IMAGES.Add(pro_image);
+
+                            }
+                        }     
+                    }
+                   
+
+                  
+                    getGiay.soluong = 0;
+
+                    while (form["size_" + count_size] != null)
+                    {
+                        if (form["size_" + count_size].Length > 0 && form["quantity_" + count_size].Length > 0)
+                        {
+                            BANGSIZE sizeGiayMoi = new BANGSIZE();
+                            sizeGiayMoi.magiay = id;
+                            sizeGiayMoi.size = int.Parse(form["size_" + count_size]);
+                            sizeGiayMoi.soluong = int.Parse(form["quantity_" + count_size]);
+                            getGiay.soluong += sizeGiayMoi.soluong;
+
+                            db.BANGSIZEs.Add(sizeGiayMoi);
+                        }
+                        count_size++;
+                        
+                    }
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch(Exception e)
             {
@@ -115,7 +168,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
         // GET: Admin/Product/Edit/5
         public ActionResult Edit(int id)
         {
-            if (Session["username"] != null)
+            if (Session["username"] != null && Session["type"].ToString().Equals("admin"))
             { 
                 if(db.GIAYs.Find(id)!= null)
                 {
@@ -133,13 +186,13 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
 
         // POST: Admin/Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(GIAY upd, HttpPostedFileBase file)
+        public ActionResult Edit(GIAY upd, HttpPostedFileBase[] files, FormCollection form)
         {
             try
             {
                 // TODO: Add update logic here
                 //GIAY giay = db.GIAYs.Find(id);
-              
+
                 //giay.gioitinh = collection["gioitinh"];
                 //giay.tengiay = collection["tengiay"];
                 //giay.soluong = int.Parse(collection["soluong"]);
@@ -147,51 +200,115 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                 //giay.size = int.Parse(collection["size"]);
                 //giay.chitiet = collection["chitiet"];
                 //giay.gia = decimal.Parse(collection["gia"]);
-
-                var giay = db.GIAYs.Where(s => s.magiay == upd.magiay).ToList();
-                foreach (var item in giay)
+                int count_size = 0;
+                if (form["size_1"].Length > 0 && form["quantity_1"].Length > 0)
                 {
-                    int id = item.magiay;
-                    item.gioitinh = upd.gioitinh;
-                    item.tengiay = upd.tengiay;
-                    item.soluong = upd.soluong;
-                    item.hang = upd.hang;
-                    item.size = upd.size;
-                    item.chitiet = upd.chitiet;
-                    item.gia = upd.gia;
+                    count_size = 1;
+                }
 
-                    if (file != null)
+                if (upd.tengiay == null)
+                {
+                    ViewBag.Error = "Vui lòng nhập tên giày";
+                }
+                else if (count_size < 1)
+                {
+                    ViewBag.Error = "Vui lòng nhập size giày";
+                }
+                else if (!upd.gia.HasValue)
+                {
+                    ViewBag.Error = "Vui lòng nhập giá giày";
+                }
+                else
+                {
+                    var giay = db.GIAYs.Where(s => s.magiay == upd.magiay).ToList();
+                    foreach (var item in giay)
                     {
-                        var allowedExtensions = new[] {
-                    ".Jpg", ".png", ".jpg", "jpeg"
-                        };
-                        var fileName = Path.GetFileName(file.FileName);
-                        var ext = Path.GetExtension(file.FileName);
-                        if (allowedExtensions.Contains(ext)) //check what type of extension  
-                        {
-                            string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
-                            string myfile = "giay_" + id + ext; //appending the name with id  
-                                                                   // store the file inside ~/project folder(Img)  
-                            var path = "~/Source/" + myfile;
-                            var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
-                           
+                        int id = item.magiay;
+                        item.gioitinh = upd.gioitinh;
+                        item.tengiay = upd.tengiay;
+                        item.soluong = upd.soluong;
+                        item.hang = upd.hang;
+                        item.size = upd.size;
+                        item.chitiet = upd.chitiet;
+                        item.gia = upd.gia;
 
-                            var path_del = Server.MapPath(item.hinh);
-                            FileInfo file2 = new FileInfo(path_del);
-                            if (file2.Exists)//check file exsit or not  
+                        if (files != null) { 
+                            //save in product
+                            var file = files[0];
+                            if(file != null)
                             {
-                                file2.Delete();
+                                var fileName = Path.GetFileName(file.FileName);
+                                var ext = Path.GetExtension(file.FileName);
+                                string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                                string myfile = "giay_" + id + ext; //appending the name with id  
+                                                                    // store the file inside ~/project folder(Img)  
+                                var path = "~/Source/" + myfile;
+                                var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
+
+
+                                var path_del = Server.MapPath(item.hinh);
+                                FileInfo file2 = new FileInfo(path_del);
+                                if (file2.Exists)//check file exsit or not  
+                                {
+                                    file2.Delete();
+                                }
+                                item.hinh = path;
+                                file.SaveAs(path2);
+
+                                //save in iamges
+                                var data_image = item.IMAGES;
+                                foreach (var image in data_image)
+                                {
+                                    var del = Server.MapPath(image.image_url);
+                                    FileInfo imageDel = new FileInfo(del);
+                                    if (imageDel.Exists)
+                                    {
+                                        imageDel.Delete();
+                                    }
+                                }
+                                item.IMAGES.Clear();
+                                db.IMAGES.RemoveRange(db.IMAGES.Where(s => s.magiay == item.magiay));
+                                foreach (var image in files)
+                                {
+                                    var f_name = Path.GetFileName(image.FileName);
+                                    var f_ext = Path.GetExtension(image.FileName);
+                                    string f_nameWe = Path.GetFileNameWithoutExtension(f_name);
+                                    string f_myfile = "giay_image_" + id + f_nameWe + f_ext;
+
+                                    var f_path = "~/Source/Product/" + f_myfile;
+                                    var f_path2 = Path.Combine(Server.MapPath("~/Source/Product"), f_myfile);
+                                    IMAGE pro_image = new IMAGE();
+                                    pro_image.image_url = f_path;
+                                    image.SaveAs(f_path2);
+                                    item.IMAGES.Add(pro_image);
+
+                                }
                             }
-                            item.hinh = path;
-                            file.SaveAs(path2);
-                        }
-                        else
-                        {
-                            ViewBag.message = "Please choose only Image file";
                         }
                     }
                 }
+                db.SaveChanges();
 
+                GIAY getGiay = db.GIAYs.Find(upd.magiay);
+                getGiay.soluong = 0;
+
+                db.BANGSIZEs.RemoveRange(getGiay.BANGSIZEs);
+
+                while (form["size_" + count_size] != null)
+                {
+                    if (form["size_" + count_size].Length > 0 && form["quantity_" + count_size].Length > 0)
+                    {
+                        BANGSIZE sizeGiayMoi = new BANGSIZE();
+                        sizeGiayMoi.magiay = upd.magiay;
+                        sizeGiayMoi.size = int.Parse(form["size_" + count_size]);
+                        sizeGiayMoi.soluong = int.Parse(form["quantity_" + count_size]);
+                        getGiay.soluong += sizeGiayMoi.soluong;
+
+                        db.BANGSIZEs.Add(sizeGiayMoi);
+                    }
+                    count_size++;
+
+                }
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -224,9 +341,6 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
             {
                 // TODO: Add delete logic here
                 GIAY giay = db.GIAYs.Find(id);
-               
-                db.GIAYs.Remove(giay);
-                db.SaveChanges();
 
                 var path = Server.MapPath(giay.hinh);
                 FileInfo file = new FileInfo(path);
@@ -234,6 +348,25 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                 {
                     file.Delete();
                 }
+
+                foreach(var item in giay.IMAGES.ToList())
+                {
+                    var path_item = Server.MapPath(item.image_url);
+                    FileInfo file_item = new FileInfo(path_item);
+                    if (file_item.Exists)
+                    {
+                        file_item.Delete();
+                    }
+                    db.IMAGES.Remove(item);
+                }
+
+                db.BANGSIZEs.RemoveRange(giay.BANGSIZEs);
+                db.BINHLUANs.RemoveRange(giay.BINHLUANs);
+                db.CTHDs.RemoveRange(giay.CTHDs);
+                
+               
+                db.GIAYs.Remove(giay);
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }

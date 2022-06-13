@@ -61,7 +61,7 @@
 
                                     </td>
                                     <td>
-                                        <strong>$</strong>@ShopGiayOnline.Models.FormatMoney.format(item.GIAY.gia.Value)
+                                        @ShopGiayOnline.Models.FormatMoney.format(item.GIAY.gia.Value)
                                     </td>
                                     <td style="min-width: 40px;">
                                         @item.soluong
@@ -78,7 +78,7 @@
                     </table>
                     <div class="d-flex justify-content-between ps-3 pb-3 pe-3">
                         <div><strong>Total</strong></div>
-                        <div><strong>$</strong>@String.Format("{0:0,0}", Math.Round(double.Parse(Model.trigia.ToString())))</div>
+                        <div>@ShopGiayOnline.Models.FormatMoney.format(Model.trigia.Value)</div>
                     </div>
                 </div>
             </div>

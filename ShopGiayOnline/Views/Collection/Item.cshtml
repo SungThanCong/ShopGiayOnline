@@ -1,0 +1,239 @@
+﻿@model  ShopGiayOnline.Models.GIAY
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Public/product.css" rel="stylesheet" type="text/css" />
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+}
+<div id="check-shoe-id" class="d-none">@Model.magiay</div>
+<div id="breadcrumbs">
+</div>
+<div class="main-content container" style="padding-top:80px;"  >
+    <div id="quick-view-product " style="display:block ;">
+
+        <div class="quick-view-product">
+                <div class="block-quickview primary_block row">
+                    <div class="product-left-column col-xs-12 col-sm-4 col-md-4">
+                        <div class="d-flex flex-md-row flex-column">
+                            <div class="box">
+                                <div class="product-img-list flex-md-column flex-row">
+                                    @foreach (var item in Model.IMAGES)
+                                    {
+                                        <div class="product-img-item">
+                                            <img src="@Url.Content(item.image_url)">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="clearfix image-block">
+                                <span class="view_full_size">
+                                    <a class="img-product" id="product-img" title="" href="#">
+                                        <img id="product-featured-image-quickview" class="img-responsive product-featured-image-quickview" src="@Url.Content(Model.hinh)" alt="">
+                                    </a>
+                                </span>
+                                <div class="loading-imgquickview" style="display:none;"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="product-center-column product-info col-xs-12 col-sm-4 col-md-5 ms-4">
+                        <h3 class="qwp-name">@Model.tengiay</h3>
+                        <div class="star">
+                            @{
+                                int dem = 0;
+                                for (int i = 0; i < Model.danhgia; i++)
+                                {
+                                    <i class="fa-solid fa-star icon-star text-warning"></i>
+                                    dem++;
+                                }
+                                while (dem < 5)
+                                {
+                                    <i class="fa-solid fa-star icon-star"></i>
+                                    dem++;
+                                }
+                            }
+                        </div>
+                        <span class="prices">
+                            <span class="price h4 mt-1">
+                                <span class="money money-per-one">@ShopGiayOnline.Models.FormatMoney.format(Model.gia.Value)</span>
+                            </span>
+                        </span>
+                        <div class="d-flex">
+                            <div class="brand me-2" style="width:150px;">
+                                <span class="float-start">Brand: </span><b>@Model.hang</b>
+                            </div>
+                            <br />
+                            <div class="brand me-2" style="width:200px;">
+                                <span class="float-start">Availability: </span>
+
+                                @if (Model.soluong > 0)
+                                {
+                                    <b> In stock</b>
+                                }
+                                else
+                                {
+                                    <b> Out of stock</b>
+                                }
+
+                            </div>
+                            <div class="brand" style="width:150px;">
+                                <span class="float-start">Size: </span>
+                                <b>@Model.size</b>
+
+                            </div>
+                        </div>
+                        <div class="product-description rte">
+                            @Model.chitiet
+                        </div>
+                        <div class="socialsharing_product no-print">
+                            <div class="social-sharing d-flex">
+                                <div>
+                                    <a class="btn social-sharing btn-facebook" href="#">
+                                        Facebook
+                                    </a>
+                                </div>
+                                <div>
+                                    <a class="btn social-sharing btn-twitter" href="#">
+                                        Tweet
+
+                                    </a>
+                                </div>
+                                <div>
+                                    <a class="btn social-sharing btn-google-plus" href="#">
+                                        Google+
+
+                                    </a>
+                                </div>
+                                <div>
+                                    <a class="btn social-sharing btn-pinterest" href="#">
+                                        Pinterest
+
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" id="product-3635844932">
+                            <div>
+                                <form>                     
+                                    <div class="quantity_wanted_p d-flex" >
+                                        <label for="quantity-detail" class="quantity-selector me-2">Quantity: </label>
+                                        <div class="js-qty d-flex">
+                                            <button type="button" class="btn btn-warning text-white opacity-75" id="minus" style="border-radius: 0; height: 35px;">-</button>
+                                            <input type="text" class="js-qty__num" value="1" style="border-radius: 0; height: 35px;width: 100px;" id="quantity-detail">
+                                            <button type="button" class="btn btn-warning text-white opacity-75 " id="plus" style="border-radius: 0; height: 35px;">+</button>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="">
+                                        <a href="#" class="btn add_to_cart_detail">
+                                            <span>Add to cart </span>
+                                        </a>
+
+                                        <a href="#" class="btn btn-outline-info add_to_wishlist_detail">
+                                            <span>Add to Wishlist </span>
+                                        </a>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                <div class="panel-group mt-5">
+                    <div class="panel-group-information">
+                        <div class="information">
+                            <button class="btn-information" data-toggle="collapse" data-target="#demo1">Thông tin sản phẩm</button>
+
+                            <div id="demo1" class="collapse">
+                                <p>Gender: Unisex</p>
+                                <p>Size run: 35 – 46</p>
+                                <p>Upper: Canvas / Suede</p>
+                                <p>Outsole: Rubber</p>
+                                <div class="sizechart">
+
+                                    <div class="sizechart-img-item">
+                                        <img src="./Image/Size-chart">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="information">
+                            <button class="btn-information" data-toggle="collapse" data-target="#demo2">Quy định đổi trả sản phẩm</button>
+
+                            <div id="demo2" class="collapse">
+                                <p> Chỉ đổi hàng 1 lần duy nhất, mong bạn cân nhắc kĩ trước khi quyết định</p>
+                                <p> Thời hạn đổi sản phẩm khi mua trực tiếp tại cửa hàng là 07 ngày, kể từ ngày mua. Đổi sản phẩm khi mua online là 14 ngày, kể từ ngày nhận hàng.</p>
+                                <p> Sản phẩm đổi phải kèm hóa đơn. Bắt buộc phải còn nguyên tem, hộp, nhãn mác.</p>
+                                <p> Sản phẩm đổi không có dấu hiệu đã qua sử dụng, không giặt tẩy, bám bẩn, biến dạng.</p>
+                                <p>
+                                    Ananas chỉ ưu tiên hỗ trợ đổi size. Trong trường hợp sản phẩm hết size cần đổi, bạn có thể đổi sang 01 sản phẩm khác:
+                                    <br> - Nếu sản phẩm muốn đổi ngang giá trị hoặc có giá trị cao hơn, bạn sẽ cần bù khoảng chênh lệch tại thời điểm đổi (nếu có).
+                                    <br> - Nếu bạn mong muốn đổi sản phẩm có giá trị thấp hơn, chúng tôi sẽ không hoàn lại tiền.
+                                </p>
+                                <p> Trong trường hợp sản phẩm - size bạn muốn đổi không còn hàng trong hệ thống. Vui lòng chọn sản phẩm khác.</p>
+                                <p> Không hoàn trả bằng tiền mặt dù bất cứ trong trường hợp nào. Mong bạn thông cảm.</p>
+
+
+                            </div>
+                        </div>
+                        <div class="information">
+                            <button class="btn-information" data-toggle="collapse" data-target="#demo3">Bảo hành như thế nào ?</button>
+
+                            <div id="demo3" class="collapse">
+                                <p>
+                                    Mỗi đôi giày Ananas trước khi xuất xưởng đều trải qua nhiều khâu kiểm tra. Tuy vậy, trong quá trình sử dụng, nếu nhận thấy các lỗi: gãy đế, hở đế, đứt chỉ may,...trong thời gian 6 tháng từ ngày mua hàng, mong bạn sớm
+                                    gửi sản phẩm về Ananas nhằm giúp chúng tôi có cơ hội phục vụ bạn tốt hơn. Vui lòng gửi sản phẩm về bất kỳ cửa hàng Ananas nào, hoặc gửi đến trung tâm bảo hành Ananas ngay trong trung tâm TP.HCM trong giờ hành chính:
+                                </p>
+                                <p>Hotline: 028 2211 0067</p>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.product-img-item').forEach(e => {
+        e.addEventListener('click', () => {
+            let img = e.querySelector('img').getAttribute('src')
+            document.querySelector('#product-img > img').setAttribute('src', img)
+        })
+    })
+    const quickView = document.getElementById("quick-view-product");
+    const quickViewMinus = document.getElementById("minus");
+    const quickViewPlus = document.getElementById("plus");
+    const quickView_quantity = document.getElementById("quantity-detail");
+    const shoeID = document.getElementById("check-shoe-id");
+    const addToCart = document.getElementsByClassName("add_to_cart_detail")[0];
+
+    var magiay = shoeID.textContent;
+
+    addToCart.href = `/purchasing/AddItemToCart?maGiay=${magiay}&soLuong=${quickView_quantity.value}`;
+
+    quickViewMinus.onclick = function () {
+        if (quickView_quantity.value > 0) {
+            quickView_quantity.value -= 1;
+            addToCart.href = `/purchasing/AddItemToCart?maGiay=${magiay}&soLuong=${quickView_quantity.value}`;
+        }
+
+    }
+    quickViewPlus.onclick = function () {
+        quickView_quantity.value = Number(quickView_quantity.value) + 1;
+        addToCart.href = `/purchasing/AddItemToCart?maGiay=${magiay}&soLuong=${quickView_quantity.value}`;
+
+    }
+    quickView_quantity.onkeyup = function () {
+        
+    };
+    
+    
+</script>
+

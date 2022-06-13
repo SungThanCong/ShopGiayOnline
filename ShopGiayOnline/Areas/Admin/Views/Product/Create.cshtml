@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+   
 }
 <style>
     body {
@@ -13,6 +14,9 @@
     }
     .form-control{
         border-radius: 0px;
+    }
+    .input-size, .input-quantity{
+        width: 120px;
     }
 </style>
 <h3 class="mb-4">Create Product</h3>
@@ -77,28 +81,52 @@
                 <div class="form-group col-lg-3 col-md-4">
                     <div class="card form-group p-4 mb-3 text-center">
                         <label class="form-control-label h6">Image</label>
-                        <div>
+                        <div class="mb-2">
                             <img id="user_img" height="100"
                                  width="90" style="border:solid" />
                         </div>
                         <div>
-                            <input type="file" title="search image" id="file" name="file" onchange="show(this)" />
+                            <input type="file" accept=".jpg, .png, .jpeg" multiple title="search image" id="files" name="files" />
+                        </div>
+                        <div id="images" class="border-1 mt-2 flex-nowrap overflow-auto" style="height: 100px; border: solid;">
+                         
                         </div>
                     </div>
                     <div class="card form-group mb-3 p-4">
                         <label class="form-control-label h6">Size</label>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.size, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.size, "", new { @class = "text-danger" })
+                        <div class="">
+                            <table id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th>Size</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th><input type="number" placeholder="Enter size" class="input-size" name="size_1"/></th>
+                                        <th><input type="number" placeholder="Enter quantity" class="input-quantity" name="quantity_1" /></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="d-flex">
+                            <div class="text-success me-2" style="font-size: 1.2em;" onclick="addSize()">
+                                <i class="fa-solid fa-circle-plus"></i>
+                            </div>
+                            <div class="text-danger" style="font-size: 1.2em;" onclick="delSize()">
+                                <i class="fa-solid fa-circle-minus"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="card form-group mb-3 p-4">
+                    @*<div class="card form-group mb-3 p-4">
                         <label class="form-control-label  h6">Number of product</label>
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.soluong, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.soluong, "", new { @class = "text-danger" })
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
              
@@ -114,7 +142,7 @@
                     <a href="@Url.Action("Index","Product")" class="btn btn-default bg-danger opacity-75 text-white text-center border-0">Back to List</a>
                 </div>
                 <div class="ms-2 text-danger p-1">
-                    @ViewBag.Error;
+                    @ViewBag.Error
                 </div>
             </div>
         </div>
@@ -123,14 +151,64 @@
     
 
     <script type="text/javascript">
-        function show(input) {
-            if (input.files && input.files[0]) {
-                var filerdr = new FileReader();
-                filerdr.onload = function (e) {
-                    $('#user_img').attr('src', e.target.result);
+        //function show(input) {
+        //    if (input.files && input.files[0]) {
+        //        var filerdr = new FileReader();
+        //        filerdr.onload = function (e) {
+        //            $('#user_img').attr('src', e.target.result);
+        //        }
+        //        filerdr.readAsDataURL(input.files[0]);
+        //    }
+        //}
+        const images = document.getElementById('images');
+
+        function show(evt) {
+            var files = evt.target.files; // FileList object
+
+            // Loop through the FileList and render image files as thumbnails.
+            for (var i = 0, f; f = files[i]; i++) {
+                images.innerHTML = "";
+                // Only process image files.
+                if (!f.type.match('image.*')) {
+                    continue;
                 }
-                filerdr.readAsDataURL(input.files[0]);
+
+                var reader = new FileReader();
+
+                // Closure to capture the file information.
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        // Render thumbnail.
+                        var span = document.createElement('span');
+                        span.innerHTML = ['<img class="thumb m-1" width="90" height="90" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+                        images.insertBefore(span, null);
+                    };
+                })(f);
+
+                // Read in the image file as a data URL.
+                reader.readAsDataURL(f);
             }
         }
 
+        document.getElementById('files').addEventListener('change', show, false);
+
+        const tableSize = document.getElementById("myTable");
+
+        function delSize() {
+            if (tableSize.rows.length > 2) {
+                tableSize.deleteRow(tableSize.rows.length - 1);
+            }
+          
+        }
+
+        function addSize() {
+            var length = tableSize.rows.length;
+            var row = tableSize.insertRow(length);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = `<input type="number" placeholder="Enter size" class="input-size" name=${"size_"+length}>`;
+            cell2.innerHTML = `<input type="number" placeholder="Enter quantity" class="input-quantity" name=${"quantity_" + length}>`;
+          
+        }
     </script>

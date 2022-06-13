@@ -69,7 +69,7 @@
                         @Html.DisplayFor(modelItem => item.quoctich)
                     </td>
                     <td class="column-center">
-                        @Html.DisplayFor(modelItem => item.doanhthu)
+                        @ShopGiayOnline.Models.FormatMoney.format(item.doanhthu.Value)
                     </td>
 
                     <td class="option-mobile column-center">

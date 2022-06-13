@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +53,12 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -130,12 +137,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PurchasingController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BANGSIZE.cs">
+      <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BANNER.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
@@ -143,6 +157,11 @@
     <Compile Include="Models\BINHLUAN.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\DANHGIA.cs">
+      <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\FormatMoney.cs" />
     <Compile Include="Models\CTHD.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
@@ -156,6 +175,7 @@
     <Compile Include="Models\IMAGE.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\SALEOFF.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
     </Compile>
@@ -180,6 +200,12 @@
     <Compile Include="Models\TAIKHOANCHU.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\THONGKE.cs">
+      <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ThongKeTheoQuocGia.cs" />
+    <Compile Include="Models\ThongKeTongHop.cs" />
+    <Compile Include="Models\ThongKeTopSale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +230,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -229,7 +256,27 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Public\Assets\background-1.jpg" />
+    <Content Include="Public\Assets\background-2.jpg" />
+    <Content Include="Public\Assets\background-3.jpg" />
+    <Content Include="Public\Assets\background-4.jpg" />
+    <Content Include="Public\Assets\blockpromotion_img.png" />
+    <Content Include="Public\Assets\close.png" />
+    <Content Include="Public\Assets\image1.png" />
+    <Content Include="Public\Assets\image2.png" />
+    <Content Include="Public\Assets\image3.png" />
     <Content Include="Public\Assets\logo-website.png" />
+    <Content Include="Public\Assets\policy_bullet.png" />
+    <Content Include="Public\Assets\vnpay.jpg" />
+    <Content Include="Public\Blog.css" />
+    <Content Include="Public\Checkout.css" />
+    <Content Include="Public\collections.css" />
+    <Content Include="Public\collections.js" />
+    <Content Include="Public\index.js" />
+    <Content Include="Public\main.css" />
+    <Content Include="Public\Page.css" />
+    <Content Include="Public\product.css" />
+    <Content Include="Public\UserSignIn.css" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -273,6 +320,10 @@
     <Content Include="Areas\Admin\Views\Order\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <Content Include="Public\Assets\payment.webp" />
+    <Content Include="Public\Assets\fancybox_overlay.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -298,6 +349,13 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Collection\Index.cshtml" />
+    <Content Include="Views\User\SignInUp.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Collection\Item.cshtml" />
+    <Content Include="Views\Purchasing\Index.cshtml" />
+    <Content Include="Views\Purchasing\Payment.cshtml" />
+    <Content Include="Views\Purchasing\PaymentResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

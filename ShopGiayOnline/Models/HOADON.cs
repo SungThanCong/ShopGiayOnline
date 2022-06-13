@@ -26,6 +26,11 @@ namespace ShopGiayOnline.Models
         public string trangthai { get; set; }
         public string phanhoi { get; set; }
         public string dcgiaohang { get; set; }
+        public string tennguoinhan { get; set; }
+        public string sdtlh { get; set; }
+        public string emaillh { get; set; }
+        public Nullable<bool> trangthaithanhtoan { get; set; }
+        public string zipcode { get; set; }
     
         public virtual ICollection<CTHD> CTHDs { get; set; }
         public virtual TAIKHOAN TAIKHOAN { get; set; }

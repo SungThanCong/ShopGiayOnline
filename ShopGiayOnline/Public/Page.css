@@ -1,0 +1,49 @@
+.page-header {
+    font-family: Lato;
+    font-size: 20px;
+    color: #caa871;
+    margin: 0;
+    padding: 0;
+    border: 0px;
+    line-height: 40px;
+}
+
+.page-content {
+    font-family: Lato;
+    font-size: 12px;
+    font-weight: 400;
+    color: #777;
+}
+
+.rte {
+    font-size: 14px;
+    color: #787878;
+    font-family: Lato;
+    line-height: 24px;
+}
+
+#linepage {
+    color: #777;
+    text-decoration: none;
+    list-style: none;
+}
+
+#linepage:hover {
+    color: #caa871;
+}
+
+.page-about-us::after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    content: "";
+    border-bottom: 2px solid #dddddd;
+    text-align: center;
+    margin: 0 auto;
+    width: 500px;
+    bottom: -50px;
+}
+
+.footer-center-update {
+    padding-top: 140px;
+}

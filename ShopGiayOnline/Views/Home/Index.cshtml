@@ -1,31 +1,444 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+  
+    
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div class="row ">
+    <div class="col-md-12 col-xs-12 slide-banner">
+        <div class="slide-banner_img">
 
+        </div>
+        <div class="slide-banner_text text-center">
+            <h2 class="text-1">Westcode since 1992</h2>
+            <h2 class="text-2">CASUAL SHOES</h2>
+            <p class="text-3">They key is to have every key, the key to open every door. Learning is <br>cool, but knowing is better, and I know the key to success. The key is<br> to enjoy life, they don’t enjoy life.</p>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <div class="col-12">
+        <div class="productlist">
+            <h4 class="title-block">Our products</h4>
+            <div class="content-block">
+                <div class="product-list">
+                    <!--Sản phẩm ở một cột-->
+                    @if (ViewBag.TopGiay != null)
+                    {
+                        foreach (var item in ViewBag.TopGiay)
+                        {
+                            <div class="">
+                                <div class="item" style="width: 380px;">
+                                    <div class="class-product">
+
+                                        <div class="left-block">
+                                            <div class="product-image-content">
+                                                <a class="product-img-link" href="#"></a>
+                                                <img class="img-product" src="@Url.Content(item.hinh ??"~/Source/Default/giay_default.png")" width="380" height="380">
+                                            </div>
+                                        </div>
+                                        <div class="right-block">
+                                            <div class="product-meta">
+                                                <h5 class="name">
+                                                    <a class="product-name" href="#">
+                                                        @item.tengiay
+                                                    </a>
+                                                </h5>
+                                                <div class="review-star">
+                                                    @{ 
+                                                        int dem = 0;
+                                                        for (int i = 0; i < item.danhgia; i++)
+                                                        {
+                                                            <i class="fa-solid fa-star icon-star text-warning"></i>
+                                                            dem++;
+                                                        }
+                                                        while (dem < 5)
+                                                        {
+                                                            <i class="fa-solid fa-star icon-star"></i>
+                                                            dem++;
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="content-price">
+                                                    <span class="money">@ShopGiayOnline.Models.FormatMoney.format(item.gia)</span>
+                                                </div>
+                                                <div class="function">
+                                                    <div class="arrow">
+                                                        <a class="arrow-link icon-function" href="#">
+                                                            <i class="fa-solid fa-arrows-to-circle colorheart"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="wish-list icon-function">
+                                                        <a class="wish-list-link" href="#">
+                                                            <i class="fa-solid fa-heart colorheart"></i>
+                                                        </a>
+                                                    </div>
+                                                    <form>
+                                                        <a class="btnrounded icon-function" href="#">
+                                                            <i class="fa-solid fa-cart-arrow-down colorheart "></i>
+                                                        </a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    <!--Sản phẩm ở một cột-->
+                    @*<div class="owl-item">
+
+            <div class="item" style="width: 380px;">
+                <div class="class-product">
+                    <div class="left-block">
+                        <div class="product-image-content">
+                            <a class="product-img-link" href="#"></a>
+                            <img class="img-product" src="~/Public/Assets/image3.png">
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <div class="product-meta">
+                            <h5 class="name">
+                                <a class="product-name" href="#">
+                                    Aeneanin consequated sagittis lacini
+                                </a>
+                            </h5>
+                            <div class="review-star">
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                            </div>
+                            <div class="content-price">
+                                <span class="money">$53.60</span>
+                            </div>
+                            <div class="function">
+                                <div class="arrow">
+                                    <a class="arrow-link icon-function" href="#">
+                                        <i class="fa-solid fa-arrows-to-circle colorheart"></i>
+                                    </a>
+                                </div>
+                                <div class="wish-list icon-function">
+                                    <a class="wish-list-link" href="#">
+                                        <i class="fa-solid fa-heart colorheart"></i>
+                                    </a>
+                                </div>
+                                <form>
+                                    <a class="btnrounded icon-function" href="#">
+                                        <i class="fa-solid fa-cart-arrow-down colorheart "></i>
+
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-product">
+                    <div class="left-block">
+                        <div class="product-image-content">
+                            <a class="product-img-link" href="#"></a>
+                            <img class="img-product" src="~/Public/Assets/image3.png">
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <div class="product-meta">
+                            <h5 class="name">
+                                <a class="product-name" href="#">
+                                    Aeneanin consequated sagittis lacini
+                                </a>
+                            </h5>
+                            <div class="review-star">
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                                <i class="fa-solid fa-star icon-star"></i>
+                            </div>
+                            <div class="content-price">
+                                <span class="money">$53.60</span>
+                            </div>
+                            <div class="function">
+                                <div class="arrow">
+                                    <a class="arrow-link icon-function" href="#">
+                                        <i class="fa-solid fa-arrows-to-circle colorheart"></i>
+                                    </a>
+                                </div>
+                                <div class="wish-list icon-function">
+                                    <a class="wish-list-link" href="#">
+                                        <i class="fa-solid fa-heart colorheart"></i>
+                                    </a>
+                                </div>
+                                <form>
+                                    <a class="btnrounded icon-function" href="#">
+                                        <i class="fa-solid fa-cart-arrow-down colorheart "></i>
+
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                    <!--Sản phẩm ở một cột-->
+                    <!-- <div class="owl-item">
+
+        <div class="item" style="width: 380px;">
+            <div class="class-product">
+                <div class="left-block">
+                    <div class="product-image-content">
+                        <a class="product-img-link" href="#"></a>
+                        <img class="img-product" src="./Image/image3.png">
+                    </div>
+                </div>
+                <div class="right-block">
+                    <div class="product-meta">
+                        <h5 class="name">
+                            <a class="product-name" href="#">
+                                Aeneanin consequated sagittis lacini
+                            </a>
+                        </h5>
+                        <div class="review-star">
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                        </div>
+                        <div class="content-price">
+                            <span class="money">$53.60</span>
+                        </div>
+                        <div class="function">
+                            <div class="arrow">
+                                <a class="arrow-link icon-function" href="#">
+                                    <i class="fa-solid fa-arrows-to-circle colorheart"></i>
+                                </a>
+                            </div>
+                            <div class="wish-list icon-function">
+                                <a class="wish-list-link" href="#">
+                                    <i class="fa-solid fa-heart colorheart"></i>
+                                </a>
+                            </div>
+                            <form>
+                                <a class="btnrounded icon-function" href="#">
+                                    <i class="fa-solid fa-cart-arrow-down colorheart "></i>
+
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="class-product">
+                <div class="left-block">
+                    <div class="product-image-content">
+                        <a class="product-img-link" href="#"></a>
+                        <img class="img-product" src="./Image/image3.png">
+                    </div>
+                </div>
+                <div class="right-block">
+                    <div class="product-meta">
+                        <h5 class="name">
+                            <a class="product-name" href="#">
+                                Aeneanin consequated sagittis lacini
+                            </a>
+                        </h5>
+                        <div class="review-star">
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                            <i class="fa-solid fa-star icon-star"></i>
+                        </div>
+                        <div class="content-price">
+                            <span class="money">$53.60</span>
+                        </div>
+                        <div class="function">
+                            <div class="arrow">
+                                <a class="arrow-link icon-function" href="#">
+                                    <i class="fa-solid fa-arrows-to-circle colorheart"></i>
+                                </a>
+                            </div>
+                            <div class="wish-list icon-function">
+                                <a class="wish-list-link" href="#">
+                                    <i class="fa-solid fa-heart colorheart"></i>
+                                </a>
+                            </div>
+                            <form>
+                                <a class="btnrounded icon-function" href="#">
+                                    <i class="fa-solid fa-cart-arrow-down colorheart "></i>
+
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="warpper">
+        <div class="group-boxline">
+            <div class="column col-md-4 col-sm-6 col-xs-6 col-sp-12">
+                <div class="block-box">
+                    <div class="block-content">
+                        <div class="media-box">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-car"></i>
+                            </div>
+                            <h4>
+                                <a href="#" title="Free shipping">Free shipping</a>
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column col-md-4 col-sm-6 col-xs-6 col-sp-12">
+                <div class="block-box">
+                    <div class="block-content">
+                        <div class="media-box">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <h4>
+                                <a href="#" title="SUPPORT 24/7">SUPPORT 24/7</a>
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column col-md-4 col-sm-6 col-xs-6 col-sp-12">
+                <div class="block-box">
+                    <div class="block-content">
+                        <div class="media-box">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </div>
+                            <h4>
+                                <a href="#" title="FREE 1ST EXCHANGE">FREE 1ST EXCHANGE</a>
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column col-md-4 col-sm-6 col-xs-6 col-sp-12">
+                <div class="block-box">
+                    <div class="block-content">
+                        <div class="media-box">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-anchor"></i>
+                            </div>
+                            <h4>
+                                <a href="#" title="PLANNING STRATEGY">PLANNING STRATEGY</a>
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column col-md-4 col-sm-6 col-xs-6 col-sp-12">
+                <div class="block-box">
+                    <div class="block-content">
+                        <div class="media-box">
+                            <div class="icon-box">
+                                <i class="fa-solid fa-gift"></i>
+                            </div>
+                            <h4>
+                                <a href="#" title="MEMBER DISCOUNT">MEMBER DISCOUNT</a>
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column col-md-4 col-sm-6 col-xs-6 col-sp-12">
+                <div class="block-box">
+                    <div class="block-content">
+                        <div class="media-box">
+                            <div class="icon-box">
+                                <i class="fa-brands fa-salesforce"></i>
+                            </div>
+                            <h4>
+                                <a href="#" title="BLACK FRIDAY">BLACK FRIDAY</a>
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-promotion">
+    <div class="col-xs-12 col-sm-12 col-md-6 no-padding">
+        <div class="widget-banner ">
+            <div class="block_content">
+                <div class="image-item">
+                    <span class="img-animation">
+                        <a href="#">
+                            <img src="~/Public/Assets/blockpromotion_img.png" alt="adv banner" class="img-responsive">
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 no-padding bg-speacial">
+        <div class="block-img">
+            <h4 class="block-title">Adidas Superstar</h4>
+            <p class="block-subtitle">THE LEGEND IS BACK</p>
+            <div class="block-content">
+                <p>
+                    Lorem Khaled Ipsum is a major key to success. The key to more success is to get a massage once a week, very important, major key, cloth talk. Egg whites, turkey sausage, wheat toast, water. Of course they don’t want us to eat our breakfast.
+
+
+                </p>
+                <a href="#" class="btn btn-outline-warning">discover more</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-xs-12 col-sm-12">
+        <div id="testimonials" class="block-testimonial">
+            <div class="linebox">
+                <div class="box-text">
+                    <div class="box-text-content">
+                        <div class="testimonial-body">
+                            Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.
+                            <br> Mirum est notare quam littera gothica, quam nunc putamus parum claram,
+                            <br> anteposuerit litterarum formas
+                            <h4 class="author">bodyover</h4>
+                            <p class="from">from Shoptify</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
