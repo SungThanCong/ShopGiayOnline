@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #breadcrumbs {
+        background: url(../../Public/Assets/breadcrum-bg.webp) no-repeat;
+        margin-bottom: 60px;
+    }
+
+    #breadcrumbaa {
+        padding: 114px 38px;
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+        list-style: none;
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .breadcrumb > li + li:before {
+        content: "\f105";
+        font-size: 14px;
+        font-family: FontAwesome;
+        padding: 0 5px;
+        color: #ccc;
+    }
+
+    .breadcrumb > li {
+        display: inline-block;
+    }
+
+    .active {
+        color: #CAA871;
+    }
+
+    #center_column {
+        padding-top: 10px;
+    }
+
+    .page-wrap {
+        padding: 20px;
+        background: white;
+        margin-bottom: 10px;
+    }
+
+    #blog-listing {
+        margin-bottom: 70px;
+        padding: 20px;
+    }
+
+        #blog-listing h1 {
+            font-family: Oswald;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 20px;
+            color: #000;
+            margin: 0;
+            padding: 6px 0;
+            text-align: center;
+        }
+
+        #blog-listing h3 {
+            font-size: 17px;
+            margin: 0;
+            padding: 20px 0 10px;
+        }
+
+            #blog-listing h3 a {
+                color: #000;
+                text-decoration: none;
+            }
+
+    .rte {
+        font-size: 14px;
+        color: #787878;
+        font-family: Lato;
+        line-height: 24px;
+    }
+
+    #blog-listing .blog-meta {
+        padding: 5px 0;
+        margin-bottom: 5px;
+        font-style: normal;
+        color: #777;
+        line-height: 16px;
+        font-size: 12px;
+        font-weight: 400;
+        display: block;
+        position: relative;
+    }
+
+    .rte p {
+        margin: 0 0 10px;
+    }
+
+    p {
+        margin: 0 0 10.5px;
+    }
+
+    h1,
+    h3 {
+        text-transform: uppercase;
+    }
+
+    #blog-listing h3 a:hover {
+        color: #CAA871;
+    }
+
+    p a:hover {
+        background-color: #CAA871;
+    }
+
+    .lineafter::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        content: "";
+        border-bottom: 2px solid #dddddd;
+        text-align: center;
+        margin: 0 auto;
+        width: 500px;
+        bottom: -28px;
+    }
+
+    #texthome {
+        color: azure;
+        text-decoration: none;
+    }
+</style>
+<section id="columns" class="columns-container">
+    <div class="container">
+        <div class="row">
+            <div id="center_column" class="col-sm-12 col-md-12 lineafter">
+                <div class="page-wrap">
+                    <div class="row">
+                        <div id="center_column" class="center_column col-md-12">
+                            <div id="content">
+                                <div id="blog-listing" class="blogs-container blog--full">
+                                    <h1>News</h1>
+                                    <div class="inner">
+                                        <h3>
+                                            <a href="/blogs/news/78489220-commodo-laoreet-semper-tincidunt-lorem">Commodo laoreet semper tincidunt lorem</a>
+                                        </h3>
+                                        <div class="blog-item clearfix">
+                                            <div class="rte">
+                                                <div class="image">
+                                                    <img src="@Url.Content("https://cdn.shopify.com/s/files/1/0997/5510/files/b-blog-4_1024x1024_2048x2048_2x.jpg?3923017163303523615")">
+                                                </div>
+                                            </div>
+                                            <div class="blog__right">
+                                                <div class="blog-meta clearfix">
+                                                    <div class="postby">
+                                                        <i class="fa-solid fa-user"></i>
+                                                        <em>Luu Le Ba Chinh</em>
+                                                    </div>
+                                                    <div class="blog-tags">
+                                                        <span class="icon-tag">Tags:</span>
+                                                        <a href="#"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="rte">
+                                                    <p>
+                                                        Commodo laoreet semper tincidunt lorem Vestibulum nunc at In Curabitur magna. Euismod euismod Suspendisse tortor ante adipiscing risus Aenean Lorem vitae id. Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan
+                                                        morbi tristique auctor Aenean nulla lacinia...
+                                                    </p>
+
+                                                </div>
+                                                <p>
+                                                    <a class="btn btn-outline-info" href="#">Read more →</a>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <h3>
+                                            <a href="/blogs/news/78489220-commodo-laoreet-semper-tincidunt-lorem">Commodo laoreet semper tincidunt lorem</a>
+                                        </h3>
+                                        <div class="blog-item clearfix">
+                                            <div class="rte">
+                                                <div class="image">
+                                                    <img src="http://cdn.shopify.com/s/files/1/0997/5510/files/blog1_1024x1024_2048x2048_2x.jpg?16022357896063640564">
+                                                </div>
+                                            </div>
+                                            <div class="blog__right">
+                                                <div class="blog-meta clearfix">
+                                                    <div class="postby">
+                                                        <i class="fa-solid fa-user"></i>
+                                                        <em>Nguyen Ngoc Trung Duc</em>
+                                                    </div>
+                                                    <div class="blog-tags">
+                                                        <span class="icon-tag">Tags:</span>
+                                                        <a href="#"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="rte">
+                                                    <p>
+                                                        Ac tincidunt Suspendisse malesuada velit in Nullam elit magnis netus Vestibulum. Praesent Nam adipiscing Aliquam elit accumsan wisi sit semper scelerisque convallis. Sed quisque cum velit Commodo laoreet semper tincidunt lorem Vestibulum nunc at In Curabitur
+                                                        magna. Euismod euismod Suspendisse...
+                                                    </p>
+
+                                                </div>
+                                                <p>
+                                                    <a class="btn btn-outline-info" href="#">Read more →</a>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <h3>
+                                            <a href="/blogs/news/78489220-commodo-laoreet-semper-tincidunt-lorem">Commodo laoreet semper tincidunt lorem</a>
+                                        </h3>
+                                        <div class="blog-item clearfix">
+                                            <div class="rte">
+                                                <div class="image">
+                                                    <img src="http://cdn.shopify.com/s/files/1/0997/5510/files/b-blog-7_1024x1024_2048x2048_2x.jpg?9967626032782111311">
+                                                </div>
+                                            </div>
+                                            <div class="blog__right">
+                                                <div class="blog-meta clearfix">
+                                                    <div class="postby">
+                                                        <i class="fa-solid fa-user"></i>
+                                                        <em>Nguyen Tan Thi Hue</em>
+                                                    </div>
+                                                    <div class="blog-tags">
+                                                        <span class="icon-tag">Tags:</span>
+                                                        <a href="#"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="rte">
+                                                    <p>
+                                                        Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus Vestibulum Praesent mauris volutpat vitae metus. Ipsum cursus
+                                                        vestibulum at interdum Vivamus nunc...
+                                                    </p>
+
+                                                </div>
+                                                <p>
+                                                    <a class="btn btn-outline-info" href="https://ap-shoes-store.myshopify.com/blogs/news/78489220-commodo-laoreet-semper-tincidunt-lorem">Read more →</a>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

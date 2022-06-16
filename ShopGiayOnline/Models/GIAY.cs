@@ -17,10 +17,10 @@ namespace ShopGiayOnline.Models
         public GIAY()
         {
             this.BINHLUANs = new HashSet<BINHLUAN>();
-            this.CTHDs = new HashSet<CTHD>();
             this.IMAGES = new HashSet<IMAGE>();
             this.SALEOFFs = new HashSet<SALEOFF>();
             this.BANGSIZEs = new HashSet<BANGSIZE>();
+            this.CTHDs = new HashSet<CTHD>();
         }
     
         public int magiay { get; set; }
@@ -36,9 +36,9 @@ namespace ShopGiayOnline.Models
         public Nullable<int> soluotdanhgia { get; set; }
     
         public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }
-        public virtual ICollection<CTHD> CTHDs { get; set; }
         public virtual ICollection<IMAGE> IMAGES { get; set; }
         public virtual ICollection<SALEOFF> SALEOFFs { get; set; }
         public virtual ICollection<BANGSIZE> BANGSIZEs { get; set; }
+        public virtual ICollection<CTHD> CTHDs { get; set; }
     }
 }

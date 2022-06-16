@@ -6,6 +6,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     <link href="~/Public/collections.css" rel="stylesheet" type="text/css" />
 }
+<style>
+    option:disabled {
+        background: #dddddd;
+    }
+</style>
 <div id="breadcrumbs">
 </div>
 <div class="bg-main">
@@ -275,7 +280,7 @@
                                                 @item.tengiay
                                             </div>
                                             <div class="product-card-price">
-                                                <span><del>@ShopGiayOnline.Models.FormatMoney.format(item.gia.Value)</del></span>
+                                                @*<span><del>@ShopGiayOnline.Models.FormatMoney.format(item.gia.Value)</del></span>*@
                                                 <span class="curr-price">@ShopGiayOnline.Models.FormatMoney.format(item.gia.Value)</span>
                                             </div>
                                         </div>
@@ -336,13 +341,8 @@
                 <div class="availability">
                     <p class="available instock">In Stock</p>
                 </div>
-                <div class="product-sku">
-                    <p>
-                        Sku:
-                        <span>36-demo</span>
-                    </p>
-                </div>
-                <div class="socialsharing_product no-print">
+                
+                <div class="socialsharing_product no-print mt-4">
                     <ul class="social-sharing list-unstyled">
                         <li>
                             <a class="btn social-sharing btn-facebook" href="#">
@@ -372,8 +372,8 @@
             </div>
             <div class="product-right-column product-item col-xs-12 col-sm-4 col-md-3" id="product-3635844932">
                 <div>
-                    <div id="form-product"">
-                        
+                    <div id="form-product" ">
+
                         <span class="prices">
                             <span class="price h2">
                                 <span class="money money-per-one">$41.93</span>
@@ -383,8 +383,18 @@
                             <span class="old-price product-price compare-price"></span>
                         </span>
                         <div class="clearfix"></div>
-                        <div class="quantity_wanted_p">
-                            <label for="quantity-detail" class="quantity-selector">Quantity</label>
+                        <div class="">
+                            <label for="size-option" class="quantity-selector">Size</label>
+                            <select id="size-option"  class="form-select form-select-sm" style="width: 70px;" aria-label="Default select example">
+                                
+                            </select>
+                        </div>
+                        <div class="mt-3" >
+                            <label class="me-4">Quantity: </label>
+                            <i class="quantity-in-stock">0</i>
+                        </div>
+                        <div class="quantity_wanted_p mt-3">
+                            
                             <div class="js-qty">
                                 <button type="button" id="collection-detail-minus" class="js-qty__adjust js-qty__adjust--minus">-</button>
                                 <input type="text" class="js-qty__num" value="1" id="collection-quantity-detail">
@@ -435,9 +445,11 @@
     const quickView_moneyTotal = document.getElementsByClassName("money-total")[0];
     const quickView_imgList = document.getElementsByClassName("product-img-list")[0];
     const quickView_imgMain = document.getElementById("product-featured-image-quickview");
+    const quickView_quantityInStock = document.getElementsByClassName("quantity-in-stock")[0];
     const icons = document.getElementsByClassName("btn-quick-view");
     const form = document.getElementById("form-product");
     const addCart = document.getElementById("add-to-cart");
+    const sizes = document.getElementById("size-option");
     
 
     //resize
@@ -493,24 +505,7 @@
             quickView.classList.remove('d-block');
         }
     }
-    quickViewMinus.onclick = function () {
-        if (quickView_quantity.value > 0) {
-            quickView_quantity.value -= 1;
-            quickView_moneyTotal.textContent = formatter.format(moneyPerOne * quickView_quantity.value);
-            addCart.href = itemString + `${quickView_quantity.value}`;
-        }
-
-    }
-    quickViewPlus.onclick = function () {
-        quickView_quantity.value = Number(quickView_quantity.value) + 1;
-        quickView_moneyTotal.textContent = formatter.format(moneyPerOne * quickView_quantity.value);
-        addCart.href = itemString + `${quickView_quantity.value}`;
-
-    }
-    quickView_quantity.onkeyup = function () {
-        quickView_moneyTotal.textContent = formatter.format(moneyPerOne * quickView_quantity.value);
-        addCart.href = itemString + `${quickView_quantity.value}`;
-    };
+   
 
     
 
@@ -527,10 +522,13 @@
         quickView_quantity.value = 1;
         quickView_moneyTotal.textContent = formatter.format(item.gia * quickView_quantity.value);
 
-        console.log(addCart);
-        itemString = `/purchasing/AddItemToCart?maGiay=${item.magiay}&soLuong=`;
-        addCart.href = `/purchasing/AddItemToCart?maGiay=${item.magiay}&soLuong=${quickView_quantity.value}`;
-       
+        if (item.soluong > 0) {
+            quickView_availability.innerHTML = `<p class="available instock">In Stock</p>`
+        } else {
+            quickView_availability.innerHTML = `<p class="available text-danger">Out Stock</p>`
+        }
+        console.log(item)
+        
 
         var images = item.IMAGES;
         for (let i = 0; i <= 2; i++) {
@@ -543,7 +541,6 @@
                             <img src="../${url}">
                         </div>`
                     quickView_imgMain.src = `../${url}`;
-                    console.log(quickView_imgMain);
                 } else {
                     let url = images[i].substring(2);
                     quickView_imgList.innerHTML += ` <div class="product-img-item">
@@ -552,6 +549,29 @@
                 }
             }
         }
+
+        sizes.innerHTML = "";
+        item.SIZESLIST.forEach((value, index) => {
+            if (item.QUANTITYLIST[index] != 0) {
+
+                sizes.innerHTML += `<option value=${value}>${value}</option>`
+            } else {
+                sizes.innerHTML += `<option value=${value} disabled>${value}</option>`
+            }
+
+        });
+        var indexSelect = sizes.selectedIndex;
+        if (indexSelect > -1) {
+            quickView_quantityInStock.textContent = item.QUANTITYLIST[indexSelect];
+        }
+        sizes.onchange = (e) => {
+            indexSelect = sizes.selectedIndex;
+            quickView_quantityInStock.textContent = item.QUANTITYLIST[indexSelect];
+            itemString = `/purchasing/AddItemToCart?maGiay=${item.magiay}&size=${sizes.value}&soLuong=`;
+            addCart.href = `/purchasing/AddItemToCart?maGiay=${item.magiay}&size=${sizes.value}&soLuong=${quickView_quantity.value}`;
+        }
+        quickView_quantityInStock
+
         document.querySelectorAll('.product-img-item').forEach(e => {
             e.addEventListener('click', () => {
 
@@ -560,6 +580,30 @@
             })
         })
         quickView.classList.add('d-block');
+
+
+        itemString = `/purchasing/AddItemToCart?maGiay=${item.magiay}&size=${sizes.value}&soLuong=`;
+        addCart.href = `/purchasing/AddItemToCart?maGiay=${item.magiay}&size=${sizes.value}&soLuong=${quickView_quantity.value}`;
+
+        quickViewMinus.onclick = function () {
+            if (quickView_quantity.value > 0) {
+                quickView_quantity.value -= 1;
+                quickView_moneyTotal.textContent = formatter.format(moneyPerOne * quickView_quantity.value);
+                addCart.href = itemString + `${quickView_quantity.value}`;
+            }
+
+        }
+        quickViewPlus.onclick = function () {
+            quickView_quantity.value = Number(quickView_quantity.value) + 1;
+            quickView_moneyTotal.textContent = formatter.format(moneyPerOne * quickView_quantity.value);
+            addCart.href = itemString + `${quickView_quantity.value}`;
+
+        }
+        quickView_quantity.onkeyup = function () {
+            quickView_moneyTotal.textContent = formatter.format(moneyPerOne * quickView_quantity.value);
+            addCart.href = itemString + `${quickView_quantity.value}`;
+        };
+        
 
     }
 

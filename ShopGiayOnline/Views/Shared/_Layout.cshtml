@@ -15,6 +15,7 @@
 
 </head>
 <style>
+
     #navigation-button{
         cursor: pointer;
         font-size: 2em;
@@ -144,10 +145,10 @@
                         </div>
                        
                         <div class="navigation-open-div-item">
-                            <a class="nav-link blogs-color text-white" href="#">Blogs</a>
+                            <a class="nav-link blogs-color text-white" href="@Url.Action("Index","Blog")">Blogs</a>
                         </div>
                         <div class="navigation-open-div-item">
-                            <a class="nav-link text-white" href="#">Pages</a>
+                            <a class="nav-link text-white" href="@Url.Action("Index","Page")">Pages</a>
                         </div>
                     </div>
                     <ul class="navbar-nav d-none d-md-flex">
@@ -159,10 +160,10 @@
                         </li>
                        
                         <li class="nav-item">
-                            <a class="nav-link blogs-color" href="#">Blogs</a>
+                            <a class="nav-link blogs-color" href="@Url.Action("Index","Blog")">Blogs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Pages</a>
+                            <a class="nav-link" href="@Url.Action("Index","Page")">Pages</a>
                         </li>
                     </ul>
                     <ul class="header_navbar-menu text-start">
@@ -187,6 +188,7 @@
                                     @if (Session["username"] != null && Session["type"].Equals("user"))
                                     {
                                         <a class="likea text-decoration-none" href="@Url.Action("Index","User")">Profile</a>
+
                                     }
                                     else
                                     {
@@ -202,13 +204,18 @@
                                 </li>
                                 @if (Session["username"] != null && Session["type"].Equals("user"))
                                 {
+                                    <li class="header_navbar-menu-item-user-like order-history">
+                                        <i class="fa-solid fa-truck"></i>
+                                        <a class="likea text-decoration-none" href="@Url.Action("Index","Order")">Order History</a>
+                                    </li>
+
                                     <li class="header_navbar-menu-item-user-like checkout">
 
                                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                         <a class="likea text-decoration-none" href="@Url.Action("Logout","User")">Logout</a>
                                     </li>
                                 }
-                                
+
                             </ul>
                         </li>
                         <li class="header_navbar-menu-item header_navbar-menu-item-search-nav">
@@ -253,7 +260,15 @@
                                     <td class="column-center">
                                         <div class="d-flex">
                                             <img src="@Url.Content(item.Giay.hinh ?? "~/Source/Default/giay_default.png")" width="60" height="60" class="p-1 me-3" />
-                                            <div style="vertical-align: middle;">@item.Giay.tengiay</div>
+                                            <div>
+                                              
+                                                <div style="vertical-align: middle;">@item.Giay.tengiay</div>
+                                                <div style="vertical-align:middle; color:grey;">
+                                                    <span>SIZE: </span>
+                                                    <span class="item-cart-size">@item.Size</span>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
                                        
                                         <div class="d-none shoe-id">@item.Giay.magiay</div>
@@ -482,21 +497,21 @@
                                             <div id="social_block" class="social-block">
                                                 <div class="social-block-content">
                                                     <div class="block_content">
-                                                        <ul class="list-unstyled">
+                                                        <ul class="list-unstyled ">
                                                             <li class="facebook">
-                                                                <a target="_blank" class="fa-brands fa-facebook" href="#" title="App shoes store on Facebook"></a>
+                                                                <a target="_blank" class="fa-brands fa-facebook text-decoration-none" href="#" title="App shoes store on Facebook"></a>
                                                             </li>
                                                             <li class="twitter">
-                                                                <a target="_blank" class="fa-brands fa-twitter" href="#" title="App shoes store on Twitter"></a>
+                                                                <a target="_blank" class="fa-brands fa-twitter text-decoration-none" href="#" title="App shoes store on Twitter"></a>
                                                             </li>
                                                             <li class="gg-plus">
-                                                                <a target="_blank" class="fa-brands fa-google-plus-g" href="#" title="App shoes store on Google-plus"></a>
+                                                                <a target="_blank" class="fa-brands fa-google-plus-g text-decoration-none" href="#" title="App shoes store on Google-plus"></a>
                                                             </li>
                                                             <li class="rss">
-                                                                <a target="_blank" class="fa-solid fa-rss" href="#" title="App shoes store on Rss"></a>
+                                                                <a target="_blank" class="fa-solid fa-rss text-decoration-none" href="#" title="App shoes store on Rss"></a>
                                                             </li>
                                                             <li class="youtube">
-                                                                <a target="_blank" class="fa-brands fa-youtube" href="#" title="App shoes store on Youtube"></a>
+                                                                <a target="_blank" class="fa-brands fa-youtube text-decoration-none" href="#" title="App shoes store on Youtube"></a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -555,6 +570,7 @@
 
     const cartItemTotalAll = document.getElementsByClassName("cart-total-price-all-item")[0];
     const cartItemTotalAllValueString = document.getElementsByClassName("cart-total-price-all-item-getValue")[0];
+    const cartItemSize_list = document.getElementsByClassName("item-cart-size");
     
     var cartItemTotalAllValue;
     if (cartItemTotalAllValueString != null) {
@@ -567,7 +583,7 @@
             if (cartItemQuantity[index].value > 0) {
                 cartItemQuantity[index].value -= 1;
                 cartItemTotal[index].textContent = formatter.format(Number(cartItenMoney[index].textContent) * cartItemQuantity[index].value);
-                $.post(`/purchasing/AddItemToCartItem?maGiay=${cartItemShoeId[index].textContent}&soLuong=${-1}`);
+                $.post(`/purchasing/AddItemToCartItem?maGiay=${cartItemShoeId[index].textContent}&size=${cartItemSize_list[index].textContent}&soLuong=${-1}`);
                 cartItemTotalAllValue -= Number(cartItenMoney[index].textContent);
                 cartItemTotalAll.textContent = formatter.format(cartItemTotalAllValue);
             }
@@ -582,7 +598,7 @@
         value.onclick = function () {
             cartItemQuantity[index].value = Number(cartItemQuantity[index].value)+1;
             cartItemTotal[index].textContent = formatter.format(Number(cartItenMoney[index].textContent) * cartItemQuantity[index].value);
-            $.post(`/purchasing/AddItemToCartItem?maGiay=${cartItemShoeId[index].textContent}&soLuong=${1}`);
+            $.post(`/purchasing/AddItemToCartItem?maGiay=${cartItemShoeId[index].textContent}&size=${cartItemSize_list[index].textContent}&soLuong=${1}`);
             cartItemTotalAllValue += Number(cartItenMoney[index].textContent);
             cartItemTotalAll.textContent = formatter.format(cartItemTotalAllValue);
            
@@ -592,8 +608,8 @@
     for (let index = 0; index < cartItemRemove.length; index++) {
         var value = cartItemRemove[index];
         value.onclick = function () {
-            $.post(`/purchasing/RemoveItemFromCart?maGiay=${cartItemShoeId[index].textContent}`);
-            console.log(`/purchasing/RemoveItemFromCart?maGiay=${cartItemShoeId[index].textContent}`)
+            $.post(`/purchasing/RemoveItemFromCart?maGiay=${cartItemShoeId[index].textContent}&size=${cartItemSize_list[index].textContent}`);
+            console.log(`/purchasing/RemoveItemFromCart?maGiay=${cartItemShoeId[index].textContent}&size=${cartItemSize_list[index].textContent}`)
             location.reload()
         }
     }

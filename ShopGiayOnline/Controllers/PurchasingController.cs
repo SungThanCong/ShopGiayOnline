@@ -19,7 +19,10 @@ namespace ShopGiayOnline.Controllers
                 TAIKHOAN user = db.TAIKHOANs.Find(Session["username"].ToString());
                 return View(user);
             }
-            return View();
+            else
+            {
+                return RedirectToAction("SignInUp", "User");
+            }
         }
 
         public ActionResult Payment(FormCollection form)
@@ -40,15 +43,15 @@ namespace ShopGiayOnline.Controllers
         }
         //Cart
        
-        public ActionResult AddItemToCart(int maGiay, int soLuong) 
+        public ActionResult AddItemToCart(int maGiay,int size, int soLuong) 
         {
             var cart = Session[SESSIONCART];
             if (cart != null)
             {
                 var list = (List<CartItem>)cart;
-                if(list.Exists(x => x.Giay.magiay == maGiay))
+                if(list.Exists(x => (x.Giay.magiay == maGiay && x.Size == size)))
                 {
-                    var update = list.Find(x => x.Giay.magiay == maGiay);
+                    var update = list.Find(x => x.Giay.magiay == maGiay && x.Size == size);
                     update.Quantity += soLuong;
                 }
                 else
@@ -56,6 +59,7 @@ namespace ShopGiayOnline.Controllers
                     CartItem item = new CartItem();
                     item.Giay = db.GIAYs.Find(maGiay);
                     item.Quantity = soLuong;
+                    item.Size = size;
                     list.Add(item);
                 }
                 Session[SESSIONCART] = list;
@@ -65,7 +69,8 @@ namespace ShopGiayOnline.Controllers
                 CartItem item = new CartItem();
                 item.Giay = item.Giay = db.GIAYs.Find(maGiay); 
                 item.Quantity = soLuong;
-                
+                item.Size = size;
+
                 List<CartItem> listItem = new List<CartItem>();
                 listItem.Add(item);
                 Session[SESSIONCART] = listItem;
@@ -75,15 +80,15 @@ namespace ShopGiayOnline.Controllers
         }
 
         [HttpPost]
-        public void AddItemToCartItem(int maGiay, int soLuong)
+        public void AddItemToCartItem(int maGiay, int size, int soLuong)
         {
             var cart = Session[SESSIONCART];
             if (cart != null)
             {
                 var list = (List<CartItem>)cart;
-                if (list.Exists(x => x.Giay.magiay == maGiay))
+                if (list.Exists(x => x.Giay.magiay == maGiay && x.Size == size))
                 {
-                    var update = list.Find(x => x.Giay.magiay == maGiay);
+                    var update = list.Find(x => x.Giay.magiay == maGiay && x.Size == size);
                     if(update.Quantity + soLuong >= 0)
                         update.Quantity += soLuong;
                     else
@@ -97,15 +102,15 @@ namespace ShopGiayOnline.Controllers
         }
 
         [HttpPost]
-        public void RemoveItemFromCart(int maGiay)
+        public void RemoveItemFromCart(int maGiay, int size)
         {
             var cart = Session[SESSIONCART];
             if (cart != null)
             {
                 var list = (List<CartItem>)cart;
-                if (list.Exists(x => x.Giay.magiay == maGiay))
+                if (list.Exists(x => x.Giay.magiay == maGiay && x.Size == size))
                 {
-                    var update = list.Find(x => x.Giay.magiay == maGiay);
+                    var update = list.Find(x => x.Giay.magiay == maGiay && x.Size == size);
                     
                     if(update != null)
                     {
@@ -142,12 +147,19 @@ namespace ShopGiayOnline.Controllers
                 foreach (var item in listItemPay)
                 {
                     CTHD cthdMoi = new CTHD();
-                    cthdMoi.magiay = item.Giay.magiay;
-                    cthdMoi.soluong = item.Quantity;
                     cthdMoi.sohd = hoaDonMoi.sohd;
+                    cthdMoi.magiay = item.Giay.magiay;
+                    cthdMoi.size = item.Size;
+                    cthdMoi.soluong = item.Quantity;
+                  
+
                     db.CTHDs.Add(cthdMoi);
-                    GIAY findGIay = db.GIAYs.Find(cthdMoi.GIAY.magiay);
-                    findGIay.soluong -= cthdMoi.soluong;
+                    db.SaveChanges();
+
+
+                    BANGSIZE bangSize = db.BANGSIZEs.Where(s => s.magiay == item.Giay.magiay && s.size == item.Size).First();
+
+                    bangSize.soluong -= cthdMoi.soluong;
                     db.SaveChanges();
                 }
 

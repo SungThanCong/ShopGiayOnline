@@ -18,6 +18,8 @@ namespace ShopGiayOnline.Controllers
             {
                 IMAGES = new List<string>();
                 SALEOFFs = new List<int>();
+                SIZESLIST = new List<int>();
+                QUANTITYLIST = new List<int>();
             }
             public int magiay { get; set; }
             public string tengiay { get; set; }
@@ -33,6 +35,9 @@ namespace ShopGiayOnline.Controllers
 
             public List<string> IMAGES { get; set; }
             public List<int> SALEOFFs { get; set; }
+            public List<int> SIZESLIST { get; set; }
+            public List<int> QUANTITYLIST { get; set; }
+
         }
         public ActionResult Index(int? page)
         {
@@ -56,6 +61,7 @@ namespace ShopGiayOnline.Controllers
                 giay.gia = item.gia;
                 giay.danhgia = item.danhgia;
                 giay.soluotdanhgia = item.soluotdanhgia;
+                giay.soluong = item.soluong;
                
                 foreach(var i in item.IMAGES){
                     giay.IMAGES.Add(i.image_url);
@@ -67,19 +73,57 @@ namespace ShopGiayOnline.Controllers
                         giay.SALEOFFs.Add(i.giamgia.Value);
                     }
                 }
+                foreach (var i in item.BANGSIZEs)
+                {
+                    giay.SIZESLIST.Add(i.size.Value);
+                    giay.QUANTITYLIST.Add(i.soluong.Value);
+                }
 
                 listGiay.Add(giay);
             }
             ViewBag.listItem = listGiay;
 
-            return View(links.ToPagedList(pageNumber,9));
+            return View(links.ToPagedList(pageNumber,6));
         }
 
 
         public ActionResult Item(int id)
         {
-            GIAY giay = db.GIAYs.Find(id);
-            return View(giay);
+            GIAY item = db.GIAYs.Find(id);
+            List<DANHGIA> danhgia = db.DANHGIAs.Where(s => s.magiay == id).ToList();
+          
+                GiayProperties giay = new GiayProperties();
+                giay.magiay = item.magiay;
+                giay.tengiay = item.tengiay;
+                giay.gioitinh = item.gioitinh;
+                giay.size = item.size;
+                giay.hang = item.hang;
+                giay.hinh = item.hinh;
+                giay.chitiet = item.chitiet;
+                giay.gia = item.gia;
+                giay.danhgia = item.danhgia;
+                giay.soluotdanhgia = item.soluotdanhgia;
+
+                foreach (var i in item.IMAGES)
+                {
+                    giay.IMAGES.Add(i.image_url);
+                }
+                foreach (var i in item.SALEOFFs)
+                {
+                    if (i.ngaybatdau < DateTime.Today && i.ngayketthuc > DateTime.Today)
+                    {
+                        giay.SALEOFFs.Add(i.giamgia.Value);
+                    }
+                }
+                foreach (var i in item.BANGSIZEs)
+                {
+                    giay.SIZESLIST.Add(i.size.Value);
+                    giay.QUANTITYLIST.Add(i.soluong.Value);
+                }
+
+            ViewBag.listDanhGia = danhgia;
+            ViewBag.listItem = giay;
+            return View(item);
         }
     }
 }

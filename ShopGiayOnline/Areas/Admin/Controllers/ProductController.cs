@@ -92,6 +92,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                     giay.gia = upd.gia;
                     giay.danhgia = 0;
                     giay.soluotdanhgia = 0;
+                    giay.soluong = 0;
 
                     db.GIAYs.Add(giay);
                     db.SaveChanges();
@@ -135,7 +136,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                    
 
                   
-                    getGiay.soluong = 0;
+                    //getGiay.soluong = 0;
 
                     while (form["size_" + count_size] != null)
                     {
@@ -145,7 +146,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                             sizeGiayMoi.magiay = id;
                             sizeGiayMoi.size = int.Parse(form["size_" + count_size]);
                             sizeGiayMoi.soluong = int.Parse(form["quantity_" + count_size]);
-                            getGiay.soluong += sizeGiayMoi.soluong;
+                            //getGiay.soluong += sizeGiayMoi.soluong;
 
                             db.BANGSIZEs.Add(sizeGiayMoi);
                         }
@@ -290,9 +291,11 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                 db.SaveChanges();
 
                 GIAY getGiay = db.GIAYs.Find(upd.magiay);
-                getGiay.soluong = 0;
 
                 db.BANGSIZEs.RemoveRange(getGiay.BANGSIZEs);
+               
+                db.SaveChanges();
+                getGiay.soluong = 0;
 
                 while (form["size_" + count_size] != null)
                 {
@@ -302,7 +305,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                         sizeGiayMoi.magiay = upd.magiay;
                         sizeGiayMoi.size = int.Parse(form["size_" + count_size]);
                         sizeGiayMoi.soluong = int.Parse(form["quantity_" + count_size]);
-                        getGiay.soluong += sizeGiayMoi.soluong;
+                        //getGiay.soluong += sizeGiayMoi.soluong;
 
                         db.BANGSIZEs.Add(sizeGiayMoi);
                     }

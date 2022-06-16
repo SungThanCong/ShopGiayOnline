@@ -357,7 +357,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-5">
+                            <div class="col-lg-5 mb-5">
                                 <div class="container">
                                     @if (Session["cart"] != null)
                                     {
@@ -374,12 +374,17 @@
                                         {
                                             tong += item.Giay.gia.Value * item.Quantity;
                                             <div class="d-flex mb-2">
-                                                <div class="product-shoes-cart me-3 ">
+                                                <div class="product-shoes-cart me-3 " >
                                                     <img class="product-shoes-image" width="80" height="80" src="@Url.Content(item.Giay.hinh)">
                                                     <span class="product-shoes-number">@item.Quantity</span>
                                                 </div>
-                                                <a class="product-shoes-name" href="#">@item.Giay.tengiay</a>
-                                                <span class="price price-plus">
+                                                <div style="width: 80%;">
+                                                    <div class="product-shoes-name" href="#">@item.Giay.tengiay</div>
+                                                    <div style="color:gray"><span>SIZE: </span><span>@item.Size</span></div>
+                                                </div>
+                                                
+
+                                                <span class="price price-plus text-end">
                                                     @ShopGiayOnline.Models.FormatMoney.format(item.Giay.gia.Value * item.Quantity)
                                                 </span>
                                             </div>

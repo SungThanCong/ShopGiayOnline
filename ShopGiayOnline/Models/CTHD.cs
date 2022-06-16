@@ -17,6 +17,7 @@ namespace ShopGiayOnline.Models
         public int sohd { get; set; }
         public int magiay { get; set; }
         public Nullable<int> soluong { get; set; }
+        public int size { get; set; }
     
         public virtual GIAY GIAY { get; set; }
         public virtual HOADON HOADON { get; set; }

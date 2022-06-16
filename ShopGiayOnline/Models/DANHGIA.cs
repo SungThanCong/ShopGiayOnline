@@ -18,7 +18,9 @@ namespace ShopGiayOnline.Models
         public string taikhoan { get; set; }
         public Nullable<int> magiay { get; set; }
         public Nullable<int> sosao { get; set; }
+        public Nullable<int> sohd { get; set; }
     
         public virtual TAIKHOAN TAIKHOAN1 { get; set; }
+        public virtual HOADON HOADON { get; set; }
     }
 }

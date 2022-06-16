@@ -152,5 +152,19 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
+        public ActionResult Confirm(int id)
+        {
+            if (Session["username"] != null)
+            {
+                HOADON hOADON = db.HOADONs.Find(id);
+                hOADON.trangthai = "completed";
+                db.SaveChanges();
+                return View(hOADON);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
     }
 }

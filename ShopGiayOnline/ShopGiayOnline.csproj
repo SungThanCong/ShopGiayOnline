@@ -141,8 +141,11 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PurchasingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -175,6 +178,7 @@
     <Compile Include="Models\IMAGE.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\SALEOFF.cs">
       <DependentUpon>ShopOnlineDatabase.tt</DependentUpon>
@@ -267,6 +271,7 @@
     <Content Include="Public\Assets\image3.png" />
     <Content Include="Public\Assets\logo-website.png" />
     <Content Include="Public\Assets\policy_bullet.png" />
+    <Content Include="Public\Assets\shipping.jpg" />
     <Content Include="Public\Assets\vnpay.jpg" />
     <Content Include="Public\Blog.css" />
     <Content Include="Public\Checkout.css" />
@@ -324,6 +329,11 @@
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Public\Assets\payment.webp" />
     <Content Include="Public\Assets\fancybox_overlay.webp" />
+    <Content Include="Public\Assets\shipping.webp" />
+    <Content Include="Public\Assets\breadcrum-bg.webp" />
+    <Content Include="Public\Assets\b-blog-4_1024x1024_2048x2048.webp" />
+    <Content Include="Public\Assets\blog2" />
+    <Content Include="Public\Assets\blog3.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -356,6 +366,11 @@
     <Content Include="Views\Purchasing\Index.cshtml" />
     <Content Include="Views\Purchasing\Payment.cshtml" />
     <Content Include="Views\Purchasing\PaymentResult.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Cart.cshtml" />
+    <Content Include="Views\Order\ReviewOrder.cshtml" />
+    <Content Include="Views\Page\Index.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

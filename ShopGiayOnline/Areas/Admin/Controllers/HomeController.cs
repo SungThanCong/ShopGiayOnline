@@ -17,7 +17,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
             {
                 if (Session["type"].Equals("admin"))
                 {
-                    return View();
+                    return RedirectToAction("Index","Dashboard");
                 } 
             }
             return RedirectToAction("Login");

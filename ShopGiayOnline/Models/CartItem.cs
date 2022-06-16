@@ -9,6 +9,7 @@ namespace ShopGiayOnline.Models
     public class CartItem
     {
         public GIAY Giay { get; set; }
+        public int Size { get; set; }
         public int Quantity { get; set; }
     }
 }

@@ -83,7 +83,6 @@ namespace ShopGiayOnline.Controllers
         [HttpPost]
         public ActionResult UpdateProfile( HttpPostedFileBase file, TAIKHOAN update)
         {
-
             try
             {
                 string tendangnhap = update.tendangnhap;
@@ -96,13 +95,14 @@ namespace ShopGiayOnline.Controllers
                 taikhoan.sdt = update.sdt;
                 taikhoan.ngaysinh = update.ngaysinh;
                 taikhoan.diachi = update.diachi;
-                
-              
+
+                if (file != null)
+                {
                     var fileName = Path.GetFileName(file.FileName);
                     var ext = Path.GetExtension(file.FileName);
                     string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
                     string myfile = "avatar_" + tendangnhap + ext; //appending the name with id  
-                                                        // store the file inside ~/project folder(Img)  
+                                                                   // store the file inside ~/project folder(Img)  
                     var path = "~/Source/" + myfile;
                     var path2 = Path.Combine(Server.MapPath("~/Source"), myfile);
 
@@ -114,7 +114,9 @@ namespace ShopGiayOnline.Controllers
                     }
                     taikhoan.avatar = path;
                     file.SaveAs(path2);
-              
+
+                }
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");

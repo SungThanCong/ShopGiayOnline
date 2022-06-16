@@ -16,7 +16,7 @@
 
 <div class="d-flex justify-content-between mb-4 ">
     <h2 class="fw-bold">Orders</h2>
-    <a href="@Url.Action("Create", "Order")" class="btn btn-primary p-2 ps-3 pe-3 fw-bolder text-dark bg-warning border-0 rounded-0 text-center h5">Create new</a>
+    
 </div>
 @*table-striped*@
  
@@ -58,7 +58,7 @@
             </tr>
         </thead>
 
-        <tbody id="body">
+        <tbody id="my-body">
             @foreach (var item in Model)
             {
 
@@ -164,7 +164,7 @@
     var option_pending = document.getElementsByClassName("option-pending")[0];
     var option_cancel = document.getElementsByClassName("option-cancel")[0];
     var option_complete = document.getElementsByClassName("option-complete")[0];
-    var html = document.getElementById('body');
+    var table_body = document.querySelector("tbody");
 
     option_all.onclick = () => {
         option = 0;
@@ -221,11 +221,11 @@
         resetUpdate();
     }
     function resetUpdate() {
-        console.log(option);
+        console.log(table_body);
 
             if (option == 1)
             {
-                html.innerHTML = `
+                table_body.innerHTML = `
                 @foreach (var item in Model)
                 {
                     if (item.trangthai.Equals("shipping"))
@@ -296,7 +296,7 @@
             }
             else if (option == 2)
             {
-                html.innerHTML =`
+                table_body.innerHTML =`
                 @foreach (var item in Model)
                 {
                     if (item.trangthai.Equals("pending"))
@@ -367,7 +367,7 @@
             }
             else if (option == 3)
             {
-                html.innerHTML = `
+                table_body.innerHTML = `
                 @foreach (var item in Model)
                 {
                     if (item.trangthai.Equals("cancel"))
@@ -438,7 +438,7 @@
             }
             else if (option == 4)
             {
-                html.innerHTML = `
+                table_body.innerHTML = `
                 @foreach (var item in Model)
                 {
                     if (item.trangthai.Equals("completed"))
@@ -509,7 +509,7 @@
             }
             else if( option == 0)
             {
-                html.innerHTML = `
+                table_body.innerHTML = `
                 @foreach (var item in Model)
                 {
 

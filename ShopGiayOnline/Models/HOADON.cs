@@ -17,6 +17,7 @@ namespace ShopGiayOnline.Models
         public HOADON()
         {
             this.CTHDs = new HashSet<CTHD>();
+            this.DANHGIAs = new HashSet<DANHGIA>();
         }
     
         public int sohd { get; set; }
@@ -32,7 +33,8 @@ namespace ShopGiayOnline.Models
         public Nullable<bool> trangthaithanhtoan { get; set; }
         public string zipcode { get; set; }
     
-        public virtual ICollection<CTHD> CTHDs { get; set; }
         public virtual TAIKHOAN TAIKHOAN { get; set; }
+        public virtual ICollection<CTHD> CTHDs { get; set; }
+        public virtual ICollection<DANHGIA> DANHGIAs { get; set; }
     }
 }
