@@ -43,7 +43,7 @@
 
 <div class="me-lg-5 me-md-3">
     <div class="dl-horizontal row d-flex justify-content-between">
-        <div class="card col-md-4 col-lg-3 mb-4">
+        <div class="card col-md-4 mb-4">
             <div class="card-body">
                 <div>
                     <div style="border-radius: 50%;" class="text-center">
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 col-md-7">
+        <div class="col-md-8">
             <div class="card card-body mb-4">
                 <div style="margin-bottom: -12px;">
                     <h5>Order</h5>
@@ -121,7 +121,7 @@
                                         }
                                     </div>
                                 </td>
-                                <td><div>$@item.trigia</div></td>
+                                <td><div>@ShopGiayOnline.Models.FormatMoney.format(item.trigia.Value)</div></td>
                             </tr>
                             }
                         </tbody>

@@ -1,0 +1,124 @@
+#breadcrumbs {
+    background: url(./Image/breadcrum-bg.webp) no-repeat;
+    margin-bottom: 60px;
+}
+
+#breadcrumbaa {
+    padding: 114px 38px;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    list-style: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.breadcrumb>li+li:before {
+    content: "\f105";
+    font-size: 14px;
+    font-family: FontAwesome;
+    padding: 0 5px;
+    color: #ccc;
+}
+
+.breadcrumb>li {
+    display: inline-block;
+}
+
+.active {
+    color: #CAA871;
+}
+
+#center_column {
+    padding-top: 10px;
+}
+
+.page-wrap {
+    padding: 20px;
+    background: white;
+    margin-bottom: 10px;
+}
+
+#blog-listing {
+    margin-bottom: 70px;
+    padding: 20px;
+}
+
+#blog-listing h1 {
+    font-family: Oswald;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #000;
+    margin: 0;
+    padding: 6px 0;
+    text-align: center;
+}
+
+#blog-listing h3 {
+    font-size: 17px;
+    margin: 0;
+    padding: 20px 0 10px;
+}
+
+#blog-listing h3 a {
+    color: #000;
+    text-decoration: none;
+}
+
+.rte {
+    font-size: 14px;
+    color: #787878;
+    font-family: Lato;
+    line-height: 24px;
+}
+
+#blog-listing .blog-meta {
+    padding: 5px 0;
+    margin-bottom: 5px;
+    font-style: normal;
+    color: #777;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    position: relative;
+}
+
+.rte p {
+    margin: 0 0 10px;
+}
+
+p {
+    margin: 0 0 10.5px;
+}
+
+h1,
+h3 {
+    text-transform: uppercase;
+}
+
+#blog-listing h3 a:hover {
+    color: #CAA871;
+}
+
+p a:hover {
+    background-color: #CAA871;
+}
+
+.lineafter::after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    content: "";
+    border-bottom: 2px solid #dddddd;
+    text-align: center;
+    margin: 0 auto;
+    width: 500px;
+    bottom: -28px;
+}
+
+#texthome {
+    color: azure;
+    text-decoration: none;
+}

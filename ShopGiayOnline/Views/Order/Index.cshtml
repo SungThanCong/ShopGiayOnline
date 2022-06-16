@@ -1,0 +1,560 @@
+﻿@model IEnumerable<ShopGiayOnline.Models.OrderItem>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    .order-status {
+        width: 20%;
+        cursor: pointer;
+        padding: 12px;
+        font-weight: 600;
+    }
+    .order-status:hover:not(.order-status-selected) {
+        opacity: 0.25;
+        background-color: #F0E68C;
+        transition: 0.2s;
+    }
+    .order-status-selected {
+        background-color: #F0E68C;
+    }
+    .so-hd{
+        color: red;
+        font-size:1.1em;
+        
+    }
+    .trang-thai {
+        color: #BDB76B;
+        text-transform: uppercase;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+    #breadcrumbs {
+        background-image: url(../../Public/Assets/shipping.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        margin:auto;
+        height:400px;
+        
+    }
+    .card-body{
+        background-color: #F6F7F9;
+    }
+</style>
+<div id="breadcrumbs">
+</div>
+<div class="container mt-5">
+    <div class="card card-body p-0 border border-top-0 border-start-0 border-end-0 rounded-0">
+        <div class="d-flex justify-content-between text-center">
+            <div class="order-status order-status-all order-status-selected">All</div>
+            <div class="order-status order-status-pending">Pending</div>
+            <div class="order-status order-status-shipping">Shipping</div>
+            <div class="order-status order-status-completed">Delivered</div>
+            <div class="order-status order-status-cancel">Cancel</div>
+        </div>
+    </div>
+    <div class="order-status-all-display">
+        @foreach (var item in Model)
+        {
+            var status = item.Order.trangthai;
+
+            <div class="card p-4 card-body rounded-0 mt-4">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="so-hd">#@item.Order.sohd</div>
+                    <div class="trang-thai">@item.Order.trangthai</div>
+                </div>
+                <div>
+                    @foreach (var cartItem in item.ListCartItem)
+                    {
+                        <div class="p-2 rounded-0 border border-start-0 border-end-0 d-flex justify-content-between">
+                            <div class="" style="width: 70%;">
+                                <div class="d-flex">
+                                    <img src="@Url.Content(cartItem.Giay.hinh ?? "~/Source/Default/giay_default.png")" width="100" height="100" class="p-1 me-3" />
+                                    <div>
+                                        <div>@cartItem.Giay.tengiay</div>
+                                        <div style=" color:grey;">
+                                            <span>SIZE: </span>
+                                            <span class="item-cart-size">@cartItem.Size</span>
+                                        </div>
+                                        <div>
+                                            <span>x </span>
+                                            <span>@cartItem.Quantity</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-none shoe-id">@cartItem.Giay.magiay</div>
+                            </div>
+                            <div>
+                                <h6 class="text-danger">@ShopGiayOnline.Models.FormatMoney.format(cartItem.Giay.gia.Value)</h6>
+                                <h6 class="cart-money d-none">@cartItem.Giay.gia.Value</h6>
+                            </div>
+                        </div>
+                    }
+                    <div class="text-end mt-3">
+                        <span>Total: </span>
+                        <span class="text-danger" style="font-weight:600; font-size: 1.5em;">@ShopGiayOnline.Models.FormatMoney.format(item.Order.trigia.Value)</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="d-flex">
+                            <span class="me-2">Order date: </span>
+                            <span><i>@DateTime.Parse(item.Order.ngaythanhtoan.ToString()).ToString("dd/MM/yyyy")</i></span>
+                        </div>
+                        <div>
+                            @if (status.Equals("pending"))
+                            {
+                                <a href="#" class="btn btn-dark opacity-50" onclick="CancelHandle(this)">Cancel<span class="d-none">@item.Order.sohd</span></a>
+                            }
+                            else if (status.Equals("completed"))
+                            {
+                                <a href="#" class="btn btn-danger" onclick="return ReorderHandle(this)">Re-order<span class="d-none">@item.Order.sohd</span></a>
+                                if (item.Order.DANHGIAs.Count == 0)
+                                {
+                                    <a href="@Url.Action("ReviewOrder","Order",new { sohd = item.Order.sohd})" class="btn btn-warning">Review<span class="d-none">@item.Order.sohd</span></a>
+                                }
+
+                            }
+                            else if (status.Equals("cancel"))
+                            {
+                                <a href="#" class="btn btn-danger" onclick="return ReorderHandle(this)">Re-order<span class="d-none">@item.Order.sohd</span></a>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                @*<div>@item.Order.ngaythanhtoan</div>
+                    <div>@item.Order.trigia</div>*@
+            </div>
+        }
+    </div>
+    <div class="order-status-pending-display d-none">
+        @foreach (var item in Model.Where(s=>s.Order.trangthai.Equals("pending")))
+        {
+            var status = item.Order.trangthai;
+
+            <div class="card p-4 card-body rounded-0 mt-4">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="so-hd">#@item.Order.sohd</div>
+                    <div class="trang-thai">@item.Order.trangthai</div>
+                </div>
+                <div>
+                    @foreach (var cartItem in item.ListCartItem)
+                    {
+                        <div class="p-2 rounded-0 border border-start-0 border-end-0 d-flex justify-content-between">
+                            <div class="" style="width: 70%;">
+                                <div class="d-flex">
+                                    <img src="@Url.Content(cartItem.Giay.hinh ?? "~/Source/Default/giay_default.png")" width="100" height="100" class="p-1 me-3" />
+                                    <div>
+                                        <div>@cartItem.Giay.tengiay</div>
+                                        <div style=" color:grey;">
+                                            <span>SIZE: </span>
+                                            <span class="item-cart-size">@cartItem.Size</span>
+                                        </div>
+                                        <div>
+                                            <span>x </span>
+                                            <span>@cartItem.Quantity</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-none shoe-id">@cartItem.Giay.magiay</div>
+                            </div>
+                            <div>
+                                <h6 class="text-danger">@ShopGiayOnline.Models.FormatMoney.format(cartItem.Giay.gia.Value)</h6>
+                                <h6 class="cart-money d-none">@cartItem.Giay.gia.Value</h6>
+                            </div>
+                        </div>
+                    }
+                    <div class="text-end mt-3">
+                        <span>Total: </span>
+                        <span class="text-danger" style="font-weight:600; font-size: 1.5em;">@ShopGiayOnline.Models.FormatMoney.format(item.Order.trigia.Value)</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="d-flex">
+                            <span class="me-2">Order date: </span>
+                            <span><i>@DateTime.Parse(item.Order.ngaythanhtoan.ToString()).ToString("dd/MM/yyyy")</i></span>
+                        </div>
+                        <div>
+                            @if (status.Equals("pending"))
+                            {
+                                <a href="#" class="btn btn-dark opacity-50" onclick="CancelHandle(this)">Cancel<span class="d-none">@item.Order.sohd</span></a>
+                            }
+                            else if (status.Equals("completed"))
+                            {
+                                <a href="#" class="btn btn-danger">Re-order</a>
+                                <a href="#" class="btn btn-warning">Review</a>
+                            }
+                            else if (status.Equals("cancel"))
+                            {
+                                <a href="#" class="btn btn-danger">Re-order</a>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                @*<div>@item.Order.ngaythanhtoan</div>
+                    <div>@item.Order.trigia</div>*@
+            </div>
+        }
+    </div>
+    <div class="order-status-shipping-display d-none">
+        @foreach (var item in Model.Where(s => s.Order.trangthai.Equals("shipping")))
+        {
+            var status = item.Order.trangthai;
+
+            <div class="card p-4 card-body rounded-0 mt-4">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="so-hd">#@item.Order.sohd</div>
+                    <div class="trang-thai">@item.Order.trangthai</div>
+                </div>
+                <div>
+                    @foreach (var cartItem in item.ListCartItem)
+                    {
+                        <div class="p-2 rounded-0 border border-start-0 border-end-0 d-flex justify-content-between">
+                            <div class="" style="width: 70%;">
+                                <div class="d-flex">
+                                    <img src="@Url.Content(cartItem.Giay.hinh ?? "~/Source/Default/giay_default.png")" width="100" height="100" class="p-1 me-3" />
+                                    <div>
+                                        <div>@cartItem.Giay.tengiay</div>
+                                        <div style=" color:grey;">
+                                            <span>SIZE: </span>
+                                            <span class="item-cart-size">@cartItem.Size</span>
+                                        </div>
+                                        <div>
+                                            <span>x </span>
+                                            <span>@cartItem.Quantity</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-none shoe-id">@cartItem.Giay.magiay</div>
+                            </div>
+                            <div>
+                                <h6 class="text-danger">@ShopGiayOnline.Models.FormatMoney.format(cartItem.Giay.gia.Value)</h6>
+                                <h6 class="cart-money d-none">@cartItem.Giay.gia.Value</h6>
+                            </div>
+                        </div>
+                    }
+                    <div class="text-end mt-3">
+                        <span>Total: </span>
+                        <span class="text-danger" style="font-weight:600; font-size: 1.5em;">@ShopGiayOnline.Models.FormatMoney.format(item.Order.trigia.Value)</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="d-flex">
+                            <span class="me-2">Order date: </span>
+                            <span><i>@DateTime.Parse(item.Order.ngaythanhtoan.ToString()).ToString("dd/MM/yyyy")</i></span>
+                        </div>
+                        <div>
+                            @if (status.Equals("pending"))
+                            {
+                                <a href="#" class="btn btn-dark opacity-50">Cancel</a>
+                            }
+                            else if (status.Equals("completed"))
+                            {
+                                <a href="#" class="btn btn-danger">Re-order</a>
+                                <a href="#" class="btn btn-warning">Review</a>
+                            }
+                            else if (status.Equals("cancel"))
+                            {
+                                <a href="#" class="btn btn-danger">Re-order</a>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                @*<div>@item.Order.ngaythanhtoan</div>
+                    <div>@item.Order.trigia</div>*@
+            </div>
+        }
+    </div>
+    <div class="order-status-completed-display d-none">
+        @foreach (var item in Model.Where(s => s.Order.trangthai.Equals("completed")))
+        {
+            var status = item.Order.trangthai;
+
+            <div class="card p-4 card-body rounded-0 mt-4">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="so-hd">#@item.Order.sohd</div>
+                    <div class="trang-thai">@item.Order.trangthai</div>
+                </div>
+                <div>
+                    @foreach (var cartItem in item.ListCartItem)
+                    {
+                        <div class="p-2 rounded-0 border border-start-0 border-end-0 d-flex justify-content-between">
+                            <div class="" style="width: 70%;">
+                                <div class="d-flex">
+                                    <img src="@Url.Content(cartItem.Giay.hinh ?? "~/Source/Default/giay_default.png")" width="100" height="100" class="p-1 me-3" />
+                                    <div>
+                                        <div>@cartItem.Giay.tengiay</div>
+                                        <div style=" color:grey;">
+                                            <span>SIZE: </span>
+                                            <span class="item-cart-size">@cartItem.Size</span>
+                                        </div>
+                                        <div>
+                                            <span>x </span>
+                                            <span>@cartItem.Quantity</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-none shoe-id">@cartItem.Giay.magiay</div>
+                            </div>
+                            <div>
+                                <h6 class="text-danger">@ShopGiayOnline.Models.FormatMoney.format(cartItem.Giay.gia.Value)</h6>
+                                <h6 class="cart-money d-none">@cartItem.Giay.gia.Value</h6>
+                            </div>
+                        </div>
+                    }
+                    <div class="text-end mt-3">
+                        <span>Total: </span>
+                        <span class="text-danger" style="font-weight:600; font-size: 1.5em;">@ShopGiayOnline.Models.FormatMoney.format(item.Order.trigia.Value)</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="d-flex">
+                            <span class="me-2">Order date: </span>
+                            <span><i>@DateTime.Parse(item.Order.ngaythanhtoan.ToString()).ToString("dd/MM/yyyy")</i></span>
+                        </div>
+                        <div>
+                            @if (status.Equals("pending"))
+                            {
+                                <a href="#" class="btn btn-dark opacity-50">Cancel</a>
+                            }
+                            else if (status.Equals("completed"))
+                            {
+                                <a href="#" class="btn btn-danger" onclick=" ReorderHandle(this)">Re-order<span class="d-none">@item.Order.sohd</span></a>
+                                if (item.Order.DANHGIAs.Count == 0)
+                                {
+                                    <a href="@Url.Action("ReviewOrder","Order",new { sohd = item.Order.sohd})" class="btn btn-warning">Review<span class="d-none">@item.Order.sohd</span></a>
+                                }
+                            }
+                            else if (status.Equals("cancel"))
+                            {
+                                <a href="#" class="btn btn-danger">Re-order</a>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                @*<div>@item.Order.ngaythanhtoan</div>
+                    <div>@item.Order.trigia</div>*@
+            </div>
+        }
+    </div>
+    <div class="order-status-cancel-display d-none">
+        @foreach (var item in Model.Where(s => s.Order.trangthai.Equals("cancel")))
+        {
+            var status = item.Order.trangthai;
+
+            <div class="card p-4 card-body rounded-0 mt-4">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="so-hd">#@item.Order.sohd</div>
+                    <div class="trang-thai">@item.Order.trangthai</div>
+                </div>
+                <div>
+                    @foreach (var cartItem in item.ListCartItem)
+                    {
+                        <div class="p-2 rounded-0 border border-start-0 border-end-0 d-flex justify-content-between">
+                            <div class="" style="width: 70%;">
+                                <div class="d-flex">
+                                    <img src="@Url.Content(cartItem.Giay.hinh ?? "~/Source/Default/giay_default.png")" width="100" height="100" class="p-1 me-3" />
+                                    <div>
+                                        <div>@cartItem.Giay.tengiay</div>
+                                        <div style=" color:grey;">
+                                            <span>SIZE: </span>
+                                            <span class="item-cart-size">@cartItem.Size</span>
+                                        </div>
+                                        <div>
+                                            <span>x </span>
+                                            <span>@cartItem.Quantity</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-none shoe-id">@cartItem.Giay.magiay</div>
+                            </div>
+                            <div>
+                                <h6 class="text-danger">@ShopGiayOnline.Models.FormatMoney.format(cartItem.Giay.gia.Value)</h6>
+                                <h6 class="cart-money d-none">@cartItem.Giay.gia.Value</h6>
+                            </div>
+                        </div>
+                    }
+                    <div class="text-end mt-3">
+                        <span>Total: </span>
+                        <span class="text-danger" style="font-weight:600; font-size: 1.5em;">@ShopGiayOnline.Models.FormatMoney.format(item.Order.trigia.Value)</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="d-flex">
+                            <span class="me-2">Order date: </span>
+                            <span><i>@DateTime.Parse(item.Order.ngaythanhtoan.ToString()).ToString("dd/MM/yyyy")</i></span>
+                        </div>
+                        <div>
+                            @if (status.Equals("pending"))
+                            {
+                                <a href="#" class="btn btn-dark opacity-50">Cancel</a>
+                            }
+                            else if (status.Equals("completed"))
+                            {
+                                <a href="#" class="btn btn-danger">Re-order</a>
+                                <a href="#" class="btn btn-warning">Review</a>
+                            }
+                            else if (status.Equals("cancel"))
+                            {
+                                <a href="#" class="btn btn-danger"  onclick="ReorderHandle(this)">Re-order<span class="d-none">@item.Order.sohd</span></a>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                @*<div>@item.Order.ngaythanhtoan</div>
+                    <div>@item.Order.trigia</div>*@
+            </div>
+        }
+    </div>
+</div>
+<script>
+    const order_status_all = document.getElementsByClassName("order-status-all")[0];
+    const order_status_pending = document.getElementsByClassName("order-status-pending")[0];
+    const order_status_shipping = document.getElementsByClassName("order-status-shipping")[0];
+    const order_status_completed = document.getElementsByClassName("order-status-completed")[0];
+    const order_status_cancel = document.getElementsByClassName("order-status-cancel")[0];
+
+    const order_status_all_display = document.getElementsByClassName("order-status-all-display")[0];
+    const order_status_shipping_display = document.getElementsByClassName("order-status-shipping-display")[0];
+    const order_status_completed_display = document.getElementsByClassName("order-status-completed-display")[0];
+    const order_status_pending_display = document.getElementsByClassName("order-status-pending-display")[0];
+    const order_status_cancel_display = document.getElementsByClassName("order-status-cancel-display")[0];
+
+    order_status_all.onclick = (e) => {
+        if (!order_status_all.classList.contains("order-status-selected")) {
+            order_status_all.classList.add("order-status-selected");
+        }
+        order_status_pending.classList.remove("order-status-selected");
+        order_status_shipping.classList.remove("order-status-selected");
+        order_status_completed.classList.remove("order-status-selected");
+        order_status_cancel.classList.remove("order-status-selected");
+
+        order_status_all_display.classList.remove("d-none");
+        if (!order_status_pending_display.classList.contains("d-none")) {
+            order_status_pending_display.classList.add("d-none");
+        }
+        if (!order_status_shipping_display.classList.contains("d-none")) {
+            order_status_shipping_display.classList.add("d-none");
+        }
+        if (!order_status_completed_display.classList.contains("d-none")) {
+            order_status_completed_display.classList.add("d-none");
+        }
+        if (!order_status_cancel_display.classList.contains("d-none")) {
+            order_status_cancel_display.classList.add("d-none");
+        }
+    }
+
+    order_status_pending.onclick = (e) => {
+        if (!order_status_pending.classList.contains("order-status-selected")) {
+            order_status_pending.classList.add("order-status-selected");
+        }
+        order_status_all.classList.remove("order-status-selected");
+        order_status_shipping.classList.remove("order-status-selected");
+        order_status_completed.classList.remove("order-status-selected");
+        order_status_cancel.classList.remove("order-status-selected");
+
+        order_status_pending_display.classList.remove("d-none");
+        if (!order_status_all_display.classList.contains("d-none")) {
+            order_status_all_display.classList.add("d-none");
+        }
+        if (!order_status_shipping_display.classList.contains("d-none")) {
+            order_status_shipping_display.classList.add("d-none");
+        }
+        if (!order_status_completed_display.classList.contains("d-none")) {
+            order_status_completed_display.classList.add("d-none");
+        }
+        if (!order_status_cancel_display.classList.contains("d-none")) {
+            order_status_cancel_display.classList.add("d-none");
+        }
+    }
+
+    order_status_shipping.onclick = (e) => {
+        if (!order_status_shipping.classList.contains("order-status-selected")) {
+            order_status_shipping.classList.add("order-status-selected");
+        }
+        order_status_all.classList.remove("order-status-selected");
+        order_status_pending.classList.remove("order-status-selected");
+        order_status_completed.classList.remove("order-status-selected");
+        order_status_cancel.classList.remove("order-status-selected");
+
+        order_status_shipping_display.classList.remove("d-none");
+        if (!order_status_all_display.classList.contains("d-none")) {
+            order_status_all_display.classList.add("d-none");
+        }
+        if (!order_status_pending_display.classList.contains("d-none")) {
+            order_status_pending_display.classList.add("d-none");
+        }
+        if (!order_status_completed_display.classList.contains("d-none")) {
+            order_status_completed_display.classList.add("d-none");
+        }
+        if (!order_status_cancel_display.classList.contains("d-none")) {
+            order_status_cancel_display.classList.add("d-none");
+        }
+    }
+
+    order_status_completed.onclick = (e) => {
+        if (!order_status_completed.classList.contains("order-status-selected")) {
+            order_status_completed.classList.add("order-status-selected");
+        }
+        order_status_all.classList.remove("order-status-selected");
+        order_status_shipping.classList.remove("order-status-selected");
+        order_status_pending.classList.remove("order-status-selected");
+        order_status_cancel.classList.remove("order-status-selected");
+
+        order_status_completed_display.classList.remove("d-none");
+        if (!order_status_all_display.classList.contains("d-none")) {
+            order_status_all_display.classList.add("d-none");
+        }
+        if (!order_status_pending_display.classList.contains("d-none")) {
+            order_status_pending_display.classList.add("d-none");
+        }
+        if (!order_status_shipping_display.classList.contains("d-none")) {
+            order_status_shipping_display.classList.add("d-none");
+        }
+        if (!order_status_cancel_display.classList.contains("d-none")) {
+            order_status_cancel_display.classList.add("d-none");
+        }
+    }
+
+    order_status_cancel.onclick = (e) => {
+        if (!order_status_cancel.classList.contains("order-status-selected")) {
+            order_status_cancel.classList.add("order-status-selected");
+        }
+        order_status_all.classList.remove("order-status-selected");
+        order_status_shipping.classList.remove("order-status-selected");
+        order_status_completed.classList.remove("order-status-selected");
+        order_status_pending.classList.remove("order-status-selected");
+
+        order_status_cancel_display.classList.remove("d-none");
+        if (!order_status_all_display.classList.contains("d-none")) {
+            order_status_all_display.classList.add("d-none");
+        }
+        if (!order_status_pending_display.classList.contains("d-none")) {
+            order_status_pending_display.classList.add("d-none");
+        }
+        if (!order_status_shipping_display.classList.contains("d-none")) {
+            order_status_shipping_display.classList.add("d-none");
+        }
+        if (!order_status_completed_display.classList.contains("d-none")) {
+            order_status_completed_display.classList.add("d-none");
+        }
+    }
+
+    function CancelHandle(e) {
+        let sohd = e.text.substring(6);
+        if (confirm("Are you sure you want to cancel this order?")) {        
+            $.post(`/Order/CancelOrder?sohd=${sohd}`);
+            window.location.href = "/Order";
+        }
+    }
+    function ReorderHandle(e) {
+        let sohd = e.text.substring(8);
+        let url = `/Order/ReOrder?sohd=${sohd}`;
+        location.replace(url);
+        return false;
+    }
+</script>
+
+

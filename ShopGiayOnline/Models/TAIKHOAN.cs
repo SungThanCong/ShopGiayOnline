@@ -18,6 +18,7 @@ namespace ShopGiayOnline.Models
         {
             this.BINHLUANs = new HashSet<BINHLUAN>();
             this.HOADONs = new HashSet<HOADON>();
+            this.DANHGIAs = new HashSet<DANHGIA>();
         }
     
         public int C_id { get; set; }
@@ -36,5 +37,6 @@ namespace ShopGiayOnline.Models
     
         public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }
         public virtual ICollection<HOADON> HOADONs { get; set; }
+        public virtual ICollection<DANHGIA> DANHGIAs { get; set; }
     }
 }

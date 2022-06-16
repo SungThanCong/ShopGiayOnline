@@ -1,0 +1,243 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .page-header {
+        font-family: Lato;
+        font-size: 20px;
+        color: #caa871;
+        margin: 0;
+        padding: 0;
+        border: 0px;
+        line-height: 40px;
+    }
+
+    .page-content {
+        font-family: Lato;
+        font-size: 12px;
+        font-weight: 400;
+        color: #777;
+    }
+
+    .rte {
+        font-size: 14px;
+        color: #787878;
+        font-family: Lato;
+        line-height: 24px;
+    }
+
+    #linepage {
+        color: #777;
+        text-decoration: none;
+        list-style: none;
+    }
+
+        #linepage:hover {
+            color: #caa871;
+        }
+
+    .page-about-us::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        content: "";
+        border-bottom: 2px solid #dddddd;
+        text-align: center;
+        margin: 0 auto;
+        width: 500px;
+        bottom: -50px;
+    }
+
+    .footer-center-update {
+        padding-top: 140px;
+    }
+    #breadcrumbs{
+        width: 100%;
+        height: 200px;
+        background-image: url(../../Public/Assets/breadcrum-bg.webp);
+        background-position: center;
+
+    }
+
+
+    /*phan duoi*/
+    #map {
+        position: relative;
+        width: 100%;
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .input-contact {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }
+
+    input[type=submit] {
+        color: black;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 2px solid black;
+        width: 100px;
+    }
+
+        input[type=submit]:hover {
+            background-color: #17a2b8;
+            transition: 0.2s;
+        }
+
+    .container-contact {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    .contactus {
+        font-family: Lato;
+        font-size: 20px;
+        color: #caa871;
+        margin: 0;
+        padding: 0;
+        border: 0px;
+        line-height: 40px;
+    }
+
+    .contact-info .contact-content {
+        text-align: left;
+        padding: 10px 20px;
+        line-height: 15px;
+        font-family: Lato;
+        font-size: 0.9em;
+        font-weight: 400;
+        color: #777;
+    }
+
+    .contact-info {
+        padding: 20px;
+    }
+
+        .contact-info ul li {
+            text-decoration: none;
+            list-style: none;
+        }
+
+        .contact-info .contact-content-title {
+            font-family: Lato;
+            font-size: 25px;
+            color: #caa871;
+            margin: 0;
+            padding: 0;
+            border: 0px;
+            line-height: 40px;
+        }
+
+    .coninfo-des {
+        line-height: 20px;
+    }
+</style>
+<div id="breadcrumbs">
+</div>
+<section id="columns" class="columns-container mt-5">
+    <div class="container">
+        <div class="row">
+            <div id="center_column" class="col-sm-12 col-md-12">
+                <div class="page-wrap page-about-us">
+                    <h1 class="page-header">ABOUT US</h1>
+                    <div class="page-content">
+                        <div class="rte">
+                            <p>A great About Us page helps builds trust between you and your customers. The more content you provide about you and your business, the more confident people will be when purchasing from your store.</p>
+                            <p>Your About Us page might include:</p>
+                            <ul>
+                                <li>Who you are</li>
+                                <li>Why you sell the items you sell</li>
+                                <li>Where you are located</li>
+                                <li>How long you have been in business</li>
+                                <li>How long you have been running your online shop</li>
+                                <li>Who are the people on your team</li>
+                                <li>Contact information</li>
+                                <li>Social links (Twitter, Facebook)</li>
+                            </ul>
+                            <p>
+                                To edit the content on this page, go to the
+                                <a id="linepage" href="/admin/pages">Pages</a> section of your Shopify admin.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container-contact container">
+    <div class="contactus">
+        <h2>Contact us</h2>
+    </div>
+
+    <form action="">
+
+        <label for="fname"> Name</label>
+        <input class="input-contact" type="text" id="fname" name="firstname" placeholder="Your name..">
+
+        <label for="lname">Email</label>
+        <input class="input-contact" type="text" id="lname" name="lastname" placeholder="Your mail..">
+        <label for="pname">Phone</label>
+        <input class="input-contact" type="text" id="lname" name="lastname" placeholder="Your phone..">
+
+
+    
+
+        <label for="subject">Message</label>
+        <textarea class="input-contact" id="subject" name="subject" placeholder="Write comment.." style="height:200px"></textarea>
+
+        <input type="submit" value="Send">
+
+    </form>
+
+
+
+    <div class="contact-info">
+        <div class="title_block contact-content-title">
+            <span>Contact Information</span>
+        </div>
+        <div class="block_content contact-content">
+            <div class="coninfo-des">
+                We'd love to hear from you - please use the form to send us your message or ideas.<br> Or simply pop in for a cup of fresh tea and a cookie
+            </div>
+        </div>
+        <ul>
+            <li class="address contact-content">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam</span>
+            </li>
+            <li class="phone contact-content">
+                <i class="fa-solid fa-phone"></i>
+                <span>
+                    Phone: (+386) 40 123 456<br>
+                    Fax: (+386) 40 123 456
+                </span>
+            </li>
+            <li class="email contact-content">
+                <i class="fa-solid fa-envelope-circle-check"></i>
+                <span>yourmail@address.com</span>
+            </li>
+            <li class="website contact-content">
+                <i class="fa-solid fa-blog"></i>
+                <span>www.DDHC.com</span>
+            </li>
+        </ul>
+        <div id="map" style="width:500px;height:500px;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15672.924961103885!2d106.78554463955082!3d10.870008899999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527587e9ad5bf%3A0xafa66f9c8be3c91!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2jhu4cgVGjDtG5nIHRpbiAtIMSQSFFHIFRQLkhDTQ!5e0!3m2!1svi!2s!4v1655300742900!5m2!1svi!2s"
+                    width="1100" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+
+    </div>

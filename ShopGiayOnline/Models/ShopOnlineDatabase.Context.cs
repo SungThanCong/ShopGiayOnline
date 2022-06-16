@@ -27,12 +27,15 @@ namespace ShopGiayOnline.Models
     
         public DbSet<BANNER> BANNERs { get; set; }
         public DbSet<BINHLUAN> BINHLUANs { get; set; }
-        public DbSet<CTHD> CTHDs { get; set; }
         public DbSet<GIAY> GIAYs { get; set; }
         public DbSet<HOADON> HOADONs { get; set; }
         public DbSet<IMAGE> IMAGES { get; set; }
         public DbSet<SALEOFF> SALEOFFs { get; set; }
         public DbSet<TAIKHOAN> TAIKHOANs { get; set; }
         public DbSet<TAIKHOANCHU> TAIKHOANCHUs { get; set; }
+        public DbSet<THONGKE> THONGKEs { get; set; }
+        public DbSet<DANHGIA> DANHGIAs { get; set; }
+        public DbSet<BANGSIZE> BANGSIZEs { get; set; }
+        public DbSet<CTHD> CTHDs { get; set; }
     }
 }

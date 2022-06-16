@@ -4,24 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="53229b48edf04b7da01ffbfe8215713d" Name="Diagram1" ZoomLevel="82">
-        <EntityTypeShape EntityType="SHOPGIAYModel.BANNER" Width="1.5" PointX="10.125" PointY="4" />
+      <Diagram DiagramId="53229b48edf04b7da01ffbfe8215713d" Name="Diagram1" ZoomLevel="115">
+        <EntityTypeShape EntityType="SHOPGIAYModel.BANNER" Width="1.5" PointX="5.125" PointY="2.75" />
         <EntityTypeShape EntityType="SHOPGIAYModel.BINHLUAN" Width="1.5" PointX="3" PointY="5.625" />
-        <EntityTypeShape EntityType="SHOPGIAYModel.CTHD" Width="1.5" PointX="3" PointY="2.875" />
         <EntityTypeShape EntityType="SHOPGIAYModel.GIAY" Width="1.5" PointX="0.75" PointY="5.125" />
         <EntityTypeShape EntityType="SHOPGIAYModel.HOADON" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="SHOPGIAYModel.IMAGE" Width="1.5" PointX="4.625" PointY="11" />
         <EntityTypeShape EntityType="SHOPGIAYModel.SALEOFF" Width="1.5" PointX="7" PointY="8.125" />
         <EntityTypeShape EntityType="SHOPGIAYModel.TAIKHOAN" Width="1.5" PointX="1.75" PointY="10.5" />
-        <EntityTypeShape EntityType="SHOPGIAYModel.TAIKHOANCHU" Width="1.5" PointX="5.75" PointY="4" />
+        <EntityTypeShape EntityType="SHOPGIAYModel.TAIKHOANCHU" Width="1.5" PointX="5.75" PointY="5.25" />
         <AssociationConnector Association="SHOPGIAYModel.FK__BINHLUAN__magiay__7E37BEF6" />
         <AssociationConnector Association="SHOPGIAYModel.FK__BINHLUAN__taikho__7F2BE32F" />
-        <AssociationConnector Association="SHOPGIAYModel.FK__CTHD__magiay__08B54D69" />
-        <AssociationConnector Association="SHOPGIAYModel.FK__CTHD__sohd__07C12930" />
         <AssociationConnector Association="SHOPGIAYModel.FK__IMAGES__magiay__0F624AF8" />
         <AssociationConnector Association="SHOPGIAYModel.FK__SALEOFF__magiay__0C85DE4D" />
         <AssociationConnector Association="SHOPGIAYModel.FK__HOADON__khachhan__05D8E0BE" />
-      </Diagram>
+        <EntityTypeShape EntityType="SHOPGIAYModel.THONGKE" Width="1.5" PointX="8.25" PointY="3.125" />
+        <EntityTypeShape EntityType="SHOPGIAYModel.DANHGIA" Width="1.5" PointX="6.875" PointY="13.25" />
+        <AssociationConnector Association="SHOPGIAYModel.FK__DANHGIA__taikhoa__0B5CAFEA" />
+        <EntityTypeShape EntityType="SHOPGIAYModel.BANGSIZE" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="SHOPGIAYModel.FK__BANGSIZE__magiay__1B9317B3" />
+        <EntityTypeShape EntityType="SHOPGIAYModel.CTHD" Width="1.5" PointX="3.375" PointY="3.375" />
+        <AssociationConnector Association="SHOPGIAYModel.FK__CTHD__magiay__36470DEF" />
+        <AssociationConnector Association="SHOPGIAYModel.FK__CTHD__sohd__3552E9B6" />
+        <AssociationConnector Association="SHOPGIAYModel.FK__DANHGIA__sohd__52E34C9D" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

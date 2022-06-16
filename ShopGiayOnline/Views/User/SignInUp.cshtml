@@ -1,0 +1,176 @@
+﻿@model ShopGiayOnline.Models.TAIKHOAN
+@{
+    Layout = null;
+    <link href="~/Public/UserSignIn.css" rel="stylesheet" type="text/css"/>
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SignInUp</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:900,900italic,500,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+
+    <div id="fback"><div class="girisback"></div><div class="kayitback"></div></div>
+
+    <div id="textbox">
+        <div class="toplam">
+
+            <div class="left">
+                <div id="ic">
+                    <h2>Sign Up</h2>
+                    <p>Synth polaroid bitters chillwave pickled. Vegan disrupt tousled.</p>
+                    <form id="girisyap" name="signup_form" id="signup_form" method="post" enctype="multipart/form-data" action="@Url.Action("SignUp","User")">
+
+                        <div class="yarim form-group">
+                            <label class="control-label" for="inputNormal">Username</label>
+                            
+                            @Html.EditorFor(model => model.tendangnhap, new { htmlAttributes = new { @name = "signup_username" ,@id = "signup_username" ,
+                           @class="bp-suggestions form-control", @cols="50", @rows="10" } })
+                        </div>
+                        <div class="yarim sn form-group">
+                            <label class="control-label" for="inputNormal">Full Name</label>
+                            @Html.EditorFor(model => model.hoten, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @name = "field_1",
+                                    @id = "field_1",
+                                    @class = "bp-suggestions form-control",
+                                    @cols = "50",
+                                    @rows = "10"
+                                }
+                            })
+                            
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="inputNormal">Email</label>
+                            @Html.EditorFor(model => model.email, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @name = "signup_email",
+                                    @id = "signup_email",
+                                    @class = "bp-suggestions form-control",
+                                    @cols = "50",
+                                    @rows = "10"
+                                }
+                            })
+                            
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="inputNormal">Password</label>
+                            @Html.EditorFor(model => model.matkhau, new
+                            {
+                               htmlAttributes = new
+                               {
+                                    @type= "password",
+                                    @name = "signup_email",
+                                    @id = "signup_email",
+                                    @class = "bp-suggestions form-control",
+                                    @cols = "50",
+                                    @rows = "10"
+                                }
+                            })
+                            
+                        </div>
+                        <div class="form-group soninpt">
+                            <label class="control-label" for="inputNormal">Phone number</label>
+                            @Html.EditorFor(model => model.sdt, new
+                            {
+                               htmlAttributes = new
+                               {
+                                    @type = "number",
+                                    @name = "signup_email",
+                                    @id = "signup_email",
+                                    @class = "bp-suggestions form-control",
+                                    @cols = "50",
+                                    @rows = "10"
+                                }
+                            })
+                            
+                        </div>
+                        <input type="submit" name="signup_submit" id="signup_submit" value="Sign Up" class="girisbtn" />
+                    </form>
+                    <h6 class="text-success">@ViewBag.Complete</h6>
+                    <h6 class="text-danger">@ViewBag.Error</h6>
+                    <button id="moveright">Login</button>
+                </div>
+            </div>
+
+            <div class="right">
+                <div id="ic">
+                    <h2>Login</h2>
+                    <p>Synth polaroid bitters chillwave pickled. Vegan disrupt tousled.</p>
+                    <form name="login-form" id="girisyap" id="sidebar-user-login" method="post" action="@Url.Action("SignIn","User")">
+
+                        <div class="form-group">
+                            <label class="control-label" for="inputNormal">Username</label>
+                            @Html.EditorFor(model => model.tendangnhap, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @type = "text",
+                                    @name = "log",
+                                    @class = "bp-suggestions form-control",
+                                    @cols = "50",
+                                    @rows = "10"
+                                }
+                            })
+                        </div>
+                        <div class="form-group soninpt">
+                            <label class="control-label" for="inputNormal">Password</label>
+                            @Html.EditorFor(model => model.matkhau, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @type = "password",
+                                    @name = "pwd",
+                                    @class = "bp-suggestions form-control",
+                                    @cols = "50",
+                                    @rows = "10"
+                                }
+                            })
+                          
+                        </div>
+                        @ViewBag.error
+                        <input type="submit" value="Login" class="girisbtn" tabindex="100" />
+                    </form>
+
+                    <button id="moveleft">Sign Up</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    $('.form-control').on('focus blur', function (e) {
+        $(this).parents('.form-group').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
+    }).trigger('blur');
+
+    $('#moveleft').click(function () {
+        $('#textbox').animate({
+            'marginLeft': "0" //moves left
+        });
+
+        $('.toplam').animate({
+            'marginLeft': "100%" //moves right
+        });
+    });
+
+    $('#moveright').click(function () {
+        $('#textbox').animate({
+            'marginLeft': "50%" //moves right
+        });
+
+        $('.toplam').animate({
+            'marginLeft': "0" //moves right
+        });
+    });
+</script>
+</html>

@@ -15,12 +15,12 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
         {
             if(Session["username"] != null)
             {
-                return View();
+                if (Session["type"].Equals("admin"))
+                {
+                    return RedirectToAction("Index","Dashboard");
+                } 
             }
-            else
-            {
-                return RedirectToAction("Login");
-            }
+            return RedirectToAction("Login");
         }
 
         public ActionResult Login()
@@ -40,6 +40,7 @@ namespace ShopGiayOnline.Areas.Admin.Controllers
                     //add session
                     Session["username"] = data.FirstOrDefault().tendangnhap;
                     Session["password"] = data.FirstOrDefault().matkhau;
+                    Session["type"] = "admin";
                     return RedirectToAction("Index");
                 }
                 else

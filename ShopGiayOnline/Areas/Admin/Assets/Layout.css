@@ -1,4 +1,8 @@
 ﻿@media only screen and (max-width: 600px) {
 
 }
+a.nav-link:hover{
+   transform: scale(1.1);
+   transition: 0.3s;
+}
 
